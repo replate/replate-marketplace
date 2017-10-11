@@ -11,6 +11,8 @@ import {
 import ListingsNavigator from './listings/ListingsNavigator';
 import ProfileNavigator from './profile/ProfileNavigator';
 
+import BaseRequester from '../requesters/BaseRequester';
+
 
 let PlatformNavigator = TabNavigator;
 
