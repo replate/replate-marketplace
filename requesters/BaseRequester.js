@@ -12,6 +12,10 @@ class BaseRequester {
     this._request('PATCH', params, success, failure);
   }
 
+  destroy = (endpoint, success, failure) => {
+    this._request('DESTROY', {}, success, failure);
+  }
+
   _request = (method, endpoint, params, success, failure) => {
     fetch(endpoint, {
       method: method,
