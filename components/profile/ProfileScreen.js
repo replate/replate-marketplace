@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, StatusBar } from 'react-native';
 
 class ProfileScreen extends React.Component {
 

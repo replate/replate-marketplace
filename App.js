@@ -6,7 +6,7 @@ export default class App extends React.Component {
   render() {
     // TODO (amillman): locally store user's email and auth token
     // for persistent sign-in
-    if (true) {
+    if (false) {
       return <MainNavigator />;
     } else {
       return <LoginNavigator />;
