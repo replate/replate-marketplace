@@ -1,34 +1,34 @@
 class BaseRequester {
 
-  get = (endpoint, success, failure) => {
-    this._request('GET', {}, success, failure);
+  static get(endpoint, success, failure) {
+    this._request('GET', endpoint, {}, success, failure);
   }
 
-  post = (endpoint, params, success, failure) => {
-    this._request('POST', params, success, failure);
+  static post(endpoint, params, success, failure) {
+    this._request('POST', endpoint, params, success, failure);
   }
 
-  patch = (endpoint, params, success, failure) => {
-    this._request('PATCH', params, success, failure);
+  static patch(endpoint, params, success, failure) {
+    this._request('PATCH', endpoint, params, success, failure);
   }
 
-  destroy = (endpoint, success, failure) => {
-    this._request('DESTROY', {}, success, failure);
+  static destroy(endpoint, success, failure) {
+    this._request('DESTROY', endpoint, {}, success, failure);
   }
 
-  _request = (method, endpoint, params, success, failure) => {
+  static _request(method, endpoint, params, success, failure) {
     fetch(endpoint, {
       method: method,
       headers: this._getHeaders(),
       body: JSON.stringify(params)
     }).then(this._checkStatus)
-      .then((response) => success(response.json()))
-      .catch((error) => failure(error));
+      .then(success)
+      .catch(failure);
   }
 
-  _checkStatus = (response) => {
+  static _checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
-      return response;
+      return response.json();
     } else {
       let error = new Error(response.statusText);
       error.response = response;
@@ -36,7 +36,7 @@ class BaseRequester {
     }
   }
 
-  _getHeaders = () => {
+  static _getHeaders() {
     headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

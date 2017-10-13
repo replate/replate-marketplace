@@ -3,13 +3,18 @@ import APIConstants from './APIConstants'
 
 class LoginRequester extends BaseRequester {
 
-  signIn = (email, password) => {
-
-    this.post(APIConstants.login.signIn)
+  static signIn(email, password, success, failure) {
+    params = {
+      marketplace_user: {
+        email: email,
+        password: password,
+      }
+    }
+    BaseRequester.post(APIConstants.login.signIn, params, success, failure);
   }
 
-  changePassword(new_password) => {
-    this.patch(APIConstants.login.changePassword);
+  static changePassword(new_password) {
+    BaseRequester.patch(APIConstants.login.changePassword);
   }
 }
 

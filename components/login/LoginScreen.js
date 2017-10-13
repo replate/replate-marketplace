@@ -20,11 +20,27 @@ import {
 import Styles from '../../styles/Styles'
 import ComponentStyles from '../../styles/ComponentStyles'
 import Colors from '../../styles/Colors'
+import LoginRequester from '../../requesters/LoginRequester'
 
 class LoginScreen extends React.Component {
 
-  _attemptLogin = () => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+    }
+  }
 
+  _attemptLogin = () => {
+    success = (user_json) => {
+      console.log(user_json);
+    };
+
+    failure = (errors) => {
+      console.log(errors);
+    };
+    LoginRequester.signIn(this.state.email, this.state.password, success, failure);
   }
 
   render() {
@@ -82,6 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: Styles.fontWeights.thin,
     color: Colors.white,
+    marginBottom: 20,
   },
 
   input: {

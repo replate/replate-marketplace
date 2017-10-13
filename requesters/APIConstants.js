@@ -1,11 +1,13 @@
-static BASE_URL = 'http://localhost:3000/api/marketplace'
-
 class APIConstants {
 
-  get login() {
+  static get BASE_URL() {
+    return 'http://localhost:3000/api/marketplace';
+  } 
+
+  static get login() {
     return {
-      signIn: 'marketplace_users/sign_in',
-      changePassword: 'marketplace_users/passwords/update',
+      signIn: this.BASE_URL + '/marketplace_users/sign_in',
+      changePassword: this.BASE_URL + '/marketplace_users/passwords/update',
     }
   }
 }
