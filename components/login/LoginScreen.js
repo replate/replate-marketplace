@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 
-import Button from 'react-native-button';
+import LoadingButton from '../common/LoadingButton';
 
 import {
   StackRouter
@@ -29,18 +29,20 @@ class LoginScreen extends React.Component {
     this.state = {
       email: '',
       password: '',
+      isLoading: false,
     }
   }
 
   _attemptLogin = () => {
     success = (user_json) => {
-      console.log(user_json);
     };
 
     failure = (errors) => {
-      console.log(errors);
     };
     LoginRequester.signIn(this.state.email, this.state.password, success, failure);
+    this.setState({
+      isLoading: true,
+    });
   }
 
   render() {
@@ -61,11 +63,12 @@ class LoginScreen extends React.Component {
                 style={[styles.input, {marginBottom: 20}]}
                 onChangeText={(text) => this.setState({password: text})}
               />
-              <Button
+              <LoadingButton
                 containerStyle={[ComponentStyles.buttonContainer, styles.buttonContainer]}
-                style={ComponentStyles.buttonText}
+                style={[ComponentStyles.buttonText, styles.buttonText]}
                 onPress={this._attemptLogin}
-              >Log in</Button>
+                isLoading={this.state.isLoading}
+                title="Log in" />
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -114,6 +117,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: 280,
     backgroundColor: Colors.alphaColor(Colors.white, 0.3),
+  },
+
+  buttonText: {
+    color: Colors.white,
   }
 });
 
