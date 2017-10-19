@@ -27,6 +27,7 @@ class BaseRequester {
   }
 
   static _checkStatus(response) {
+    console.log(response.status);
     if (response.status >= 200 && response.status < 300) {
       return response.json();
     } else {

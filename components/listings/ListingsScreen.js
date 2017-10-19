@@ -3,6 +3,10 @@ import { View, Button } from 'react-native';
 
 class ListingsScreen extends React.Component {
 
+  static navigationOptions = {
+    title: 'Listings',
+  }
+
   render() {
     return (
       <View>

@@ -14,6 +14,7 @@ class LoginRequester extends BaseRequester {
   }
 
   static changePassword(new_password) {
+    // TODO (amillman): implement change password
     BaseRequester.patch(APIConstants.login.changePassword);
   }
 }

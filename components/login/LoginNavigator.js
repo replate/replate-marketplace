@@ -4,18 +4,21 @@ import {
 } from 'react-navigation';
 
 import LoginScreen from './LoginScreen';
-import ProfileScreen from '../profile/ProfileScreen';
+import MainNavigator from '../MainNavigator';
 
 
 const LoginNavigator = StackNavigator({  
   Login: {
     screen: LoginScreen
   },
-  Profile: {
-    screen: ProfileScreen
+  Main: {
+    screen: MainNavigator
   }
 }, {
-  headerMode: 'none'
+  headerMode: 'none',
+  navigationOptions: {
+    gesturesEnabled: false,
+  }
 });
 
 export default LoginNavigator;

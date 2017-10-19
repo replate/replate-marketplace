@@ -14,18 +14,22 @@ import ProfileNavigator from './profile/ProfileNavigator';
 import BaseRequester from '../requesters/BaseRequester';
 
 
-let PlatformNavigator = TabNavigator;
+let PlatformSpecificNavigator = TabNavigator;
 
 if (Platform.OS === 'android') {
-  PlatformNavigator = DrawerNavigator;
+  PlatformSpecificNavigator = DrawerNavigator;
 }
 
-const MainNavigator = PlatformNavigator({
+const MainNavigator = PlatformSpecificNavigator({
   Listings: {
     screen: ListingsNavigator,
   },
   Profile: {
     screen: ProfileNavigator,
+  }
+}, {
+  navigationOptions: {
+    headerBackTitle: null,
   }
 });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { 
+  AsyncStorage,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -17,32 +18,46 @@ import {
   StackRouter
 } from 'react-navigation';
 
-import Styles from '../../styles/Styles'
-import ComponentStyles from '../../styles/ComponentStyles'
-import Colors from '../../styles/Colors'
+import Styles from '../../constants/Styles'
+import ComponentStyles from '../../constants/ComponentStyles'
+import Colors from '../../constants/Colors'
+import StorageKeys from '../../constants/StorageKeys'
 import LoginRequester from '../../requesters/LoginRequester'
 
 class LoginScreen extends React.Component {
 
+  static navigationOptions = {
+    title: 'Listings',
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'd@d.com',
+      password: 'LQLwPwm1',
       isLoading: false,
     }
   }
 
   _attemptLogin = () => {
     success = (user_json) => {
+      AsyncStorage.setItem(StorageKeys.user, JSON.stringify(user_json));
+      this.props.navigation.navigate('Main');
     };
 
     failure = (errors) => {
+      this.setState({
+        isLoading: false,
+      });
+      console.log(errors)
+      // TODO (amillman): show error banner
     };
-    LoginRequester.signIn(this.state.email, this.state.password, success, failure);
+
     this.setState({
       isLoading: true,
     });
+
+    LoginRequester.signIn(this.state.email, this.state.password, success, failure);
   }
 
   render() {
@@ -50,7 +65,7 @@ class LoginScreen extends React.Component {
         <KeyboardAvoidingView behavior='padding' style={styles.screen}>
           <StatusBar barStyle='light-content' />
           <TouchableWithoutFeedback
-          onPress={Keyboard.dismiss}
+            onPress={Keyboard.dismiss}
           >
             <View style={styles.contentWrapper}>
               <Image style={styles.logo} source={require('../../assets/logo-white.png')} />
