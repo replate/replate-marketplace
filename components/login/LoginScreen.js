@@ -45,11 +45,11 @@ class LoginScreen extends React.Component {
       this.props.navigation.navigate('Main');
     };
 
-    failure = (errors) => {
+    failure = (error) => {
       this.setState({
-        isLoading: false,
+        //isLoading: false,
       });
-      console.log(errors)
+      console.log(error.message)
       // TODO (amillman): show error banner
     };
 
@@ -63,7 +63,6 @@ class LoginScreen extends React.Component {
   render() {
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.screen}>
-          <StatusBar barStyle='light-content' />
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
           >
@@ -73,10 +72,12 @@ class LoginScreen extends React.Component {
               <TextInput
                 style={styles.input}
                 onChangeText={(text) => this.setState({email: text})}
+                underlineColorAndroid='transparent'
               />
               <TextInput
-                style={[styles.input, {marginBottom: 20}]}
+                style={[styles.input, {marginBottom: 25}]}
                 onChangeText={(text) => this.setState({password: text})}
+                underlineColorAndroid='transparent'
               />
               <LoadingButton
                 containerStyle={[ComponentStyles.buttonContainer, styles.buttonContainer]}
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: Styles.fontWeights.thin,
     color: Colors.white,
-    marginBottom: 20,
+    marginBottom: Styles.margins.standard,
   },
 
   input: {
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     padding: Styles.margins.standard,
     paddingBottom: Styles.margins.tight,
     borderBottomColor: Colors.alphaColor(Colors.white, 0.5),
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
 
   buttonContainer: {

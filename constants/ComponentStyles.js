@@ -15,11 +15,11 @@ const ComponentStyles = StyleSheet.create({
   buttonText: {
     color: Colors.white,
     fontSize: Styles.fontSizes.normal,
-    fontWeight: (Platform.OS === 'ios') ? Styles.fontWeights.bold : Styles.fontWeights.normal,
+    fontWeight: Styles.fontWeights.bold,
   },
 
   title: {
-    fontWeight: (Platform.OS === 'ios') ? Styles.fontWeights.bold : Styles.fontWeights.thin,
+    fontWeight: (Platform.OS === 'ios') ? Styles.fontWeights.bold : Styles.fontWeights.normal,
   }
 
 });

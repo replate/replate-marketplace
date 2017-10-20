@@ -1,7 +1,14 @@
+import {Platform} from 'react-native';
+
 class APIConstants {
 
   static get BASE_URL() {
-    return 'http://localhost:3000/api/marketplace';
+    host = '10.0.3.2';
+    if (Platform.OS === 'ios') {
+      host = 'localhost';
+    }
+    console.log(host);
+    return 'http://' + host + ':3000/api/marketplace';
   } 
 
   static get login() {

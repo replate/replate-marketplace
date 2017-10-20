@@ -28,9 +28,8 @@ class LoadingButton extends React.Component {
         disabled={this.props.isLoading}
       >
         <ActivityIndicator 
-          style={styles.indicator} 
+          style={[styles.indicator, {opacity: 1 - textOpacity}]} 
           color={styleProps.color} 
-          animating={this.props.isLoading}
         />
         <Text 
           style={[styles.text, this.props.style, {opacity: textOpacity}]}
