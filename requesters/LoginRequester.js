@@ -3,7 +3,7 @@ import APIConstants from './APIConstants'
 
 class LoginRequester extends BaseRequester {
 
-  static signIn(email, password, success, failure) {
+  static async signIn(email, password) {
     params = {
       marketplace_user: {
         email: email,
@@ -11,11 +11,12 @@ class LoginRequester extends BaseRequester {
       }
     }
 
-    success_response = (response_json) => {
-      success(response_json.marketplace_user);
+    try {
+      var response_json = await BaseRequester.post(APIConstants.login.signIn, params);
+      return Promise.resolve(response_json.marketplace_user)
+    } catch (error) {
+      return Promise.reject(error);
     }
-
-    BaseRequester.post(APIConstants.login.signIn, params, success_response, failure);
   }
 
   static changePassword(new_password) {

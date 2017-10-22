@@ -20,15 +20,13 @@ import LocalStorage from '../../helpers/LocalStorage'
 class SplashScreen extends React.Component {
 
   componentDidMount() {
-    LocalStorage.getUser((user) => {
-      setTimeout(() => {
-        if (user !== null) {
-          this.props.navigation.navigate('Main');
-        } else {
-          this.props.navigation.navigate('Login');
-        }
-      }, 2000);
-    }); 
+    setTimeout(() => {
+      LocalStorage.getUser().then((user) => {
+        this.props.navigation.navigate('Main');
+      }).catch((error) => {
+        this.props.navigation.navigate('Login');
+      });
+    }, 3000);
   }
 
   render() {

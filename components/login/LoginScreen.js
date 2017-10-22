@@ -63,7 +63,7 @@ class LoginScreen extends React.Component {
       isLoading: true,
     });
 
-    LoginRequester.signIn(this.state.email, this.state.password, success, failure);
+    LoginRequester.signIn(this.state.email, this.state.password).then(success).catch(failure);
   }
 
   render() {

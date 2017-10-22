@@ -7,13 +7,17 @@ class LocalStorage {
     AsyncStorage.setItem(StorageKeys.user, JSON.stringify(user_json));
   }
 
-  static getUser(callback) {
-    AsyncStorage.getItem(StorageKeys.user).then((result) => {
-      user = JSON.parse(result);
-      callback(user);
-    }).catch((err) => {
-      callback(null);
-    });
+  static async getUser() {
+    try {
+      var user_json = await AsyncStorage.getItem(StorageKeys.user);
+      if (user_json !== null) {
+        return Promise.resolve(JSON.parse(user_json));
+      } else {
+        return Promise.reject(new Error("No stored user"));
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   static clearUser() {
