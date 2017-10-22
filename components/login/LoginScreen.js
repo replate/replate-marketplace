@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-  AsyncStorage,
+  BackHandler,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -18,17 +18,13 @@ import {
   StackRouter
 } from 'react-navigation';
 
-import Styles from '../../constants/Styles'
+import UIConstants from '../../constants/UIConstants'
 import ComponentStyles from '../../constants/ComponentStyles'
 import Colors from '../../constants/Colors'
-import StorageKeys from '../../constants/StorageKeys'
 import LoginRequester from '../../requesters/LoginRequester'
+import LocalStorage from '../../helpers/LocalStorage'
 
 class LoginScreen extends React.Component {
-
-  static navigationOptions = {
-    title: 'Listings',
-  }
 
   constructor(props) {
     super(props);
@@ -39,18 +35,28 @@ class LoginScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this._handleBackButton);
+  }
+
+  _handleBackButton() {
+    return true;
+  }
+
   _attemptLogin = () => {
     success = (user_json) => {
-      AsyncStorage.setItem(StorageKeys.user, JSON.stringify(user_json));
+      LocalStorage.storeUser(user_json);
       this.props.navigation.navigate('Main');
     };
 
     failure = (error) => {
       this.setState({
-        //isLoading: false,
+        isLoading: false,
       });
-      console.log(error.message)
-      // TODO (amillman): show error banner
     };
 
     this.setState({
@@ -62,6 +68,8 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
+      <View>
+        <StatusBar barStyle='light-content' />
         <KeyboardAvoidingView behavior='padding' style={styles.screen}>
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
@@ -78,6 +86,7 @@ class LoginScreen extends React.Component {
                 style={[styles.input, {marginBottom: 25}]}
                 onChangeText={(text) => this.setState({password: text})}
                 underlineColorAndroid='transparent'
+                secureTextEntry
               />
               <LoadingButton
                 containerStyle={[ComponentStyles.buttonContainer, styles.buttonContainer]}
@@ -88,6 +97,7 @@ class LoginScreen extends React.Component {
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+      </View>
     );
   }
 }
@@ -110,22 +120,22 @@ const styles = StyleSheet.create({
   logo: {
     width: 75,
     height: 75,
-    marginBottom: Styles.margins.standard,
+    marginBottom: UIConstants.margins.standard,
   },
 
   title: {
     fontSize: 32,
-    fontWeight: Styles.fontWeights.thin,
+    fontWeight: UIConstants.fontWeights.thin,
     color: Colors.white,
-    marginBottom: Styles.margins.standard,
+    marginBottom: UIConstants.margins.standard,
   },
 
   input: {
     width: 280,
-    marginBottom: Styles.margins.standard,
+    marginBottom: UIConstants.margins.standard,
     color: Colors.white,
-    padding: Styles.margins.standard,
-    paddingBottom: Styles.margins.tight,
+    padding: UIConstants.margins.standard,
+    paddingBottom: UIConstants.margins.tight,
     borderBottomColor: Colors.alphaColor(Colors.white, 0.5),
     borderBottomWidth: 1,
   },

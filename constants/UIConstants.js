@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-class Styles {
+class UIConstants {
 
   static get margins() {
     return {
@@ -8,6 +8,7 @@ class Styles {
       side: (Platform.OS === 'ios') ? 15 : 10,
       text: 10,
       tight: 7,
+      navbarIcon: (Platform.OS === 'ios') ? 22 : 20,
     }
   }
 
@@ -34,6 +35,12 @@ class Styles {
       large: (Platform.OS === 'ios') ? 10 : 6,
     }
   }
+
+  static get iconSizes() {
+    return {
+      navbar: 22,
+    }
+  }
 }
 
-export default Styles;
+export default UIConstants;

@@ -1,7 +1,28 @@
 import React from 'react';
-import { View, Button, StatusBar } from 'react-native';
+import { 
+  BackHandler,
+  View, 
+  Button, 
+  StatusBar 
+} from 'react-native';
 
 class ProfileScreen extends React.Component {
+
+  static navigationOptions = ({navigation}) => ({
+    title: 'Profile',
+  });
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this._handleBackButton);
+  }
+
+  _handleBackButton() {
+    return true;
+  }
 
   render() {
     return (

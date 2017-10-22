@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 class APIConstants {
 
@@ -7,7 +7,6 @@ class APIConstants {
     if (Platform.OS === 'ios') {
       host = 'localhost';
     }
-    console.log(host);
     return 'http://' + host + ':3000/api/marketplace';
   } 
 

@@ -10,7 +10,12 @@ class LoginRequester extends BaseRequester {
         password: password,
       }
     }
-    BaseRequester.post(APIConstants.login.signIn, params, success, failure);
+
+    success_response = (response_json) => {
+      success(response_json.marketplace_user);
+    }
+
+    BaseRequester.post(APIConstants.login.signIn, params, success_response, failure);
   }
 
   static changePassword(new_password) {

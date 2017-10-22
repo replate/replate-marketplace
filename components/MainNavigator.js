@@ -1,5 +1,6 @@
 import React from 'react';
 import { 
+  Button,
   Platform
 } from 'react-native';
 import {
@@ -13,7 +14,6 @@ import ProfileNavigator from './profile/ProfileNavigator';
 
 import BaseRequester from '../requesters/BaseRequester';
 
-
 let PlatformSpecificNavigator = TabNavigator;
 
 if (Platform.OS === 'android') {
@@ -26,11 +26,7 @@ const MainNavigator = PlatformSpecificNavigator({
   },
   Profile: {
     screen: ProfileNavigator,
-  }
-}, {
-  navigationOptions: {
-    headerBackTitle: null,
-  }
+  },
 });
 
 export default MainNavigator;
