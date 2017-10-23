@@ -79,11 +79,15 @@ class LoginScreen extends React.Component {
               <View><Text style={styles.title}>Replate Marketplace</Text></View>
               <TextInput
                 style={styles.input}
+                placeholder='Email'
+                placeholderTextColor={Colors.alphaColor(Colors.white, 0.70)}
                 onChangeText={(text) => this.setState({email: text})}
                 underlineColorAndroid='transparent'
               />
               <TextInput
                 style={[styles.input, {marginBottom: 25}]}
+                placeholder='Password'
+                placeholderTextColor={Colors.alphaColor(Colors.white, 0.70)}                
                 onChangeText={(text) => this.setState({password: text})}
                 underlineColorAndroid='transparent'
                 secureTextEntry
@@ -93,7 +97,7 @@ class LoginScreen extends React.Component {
                 style={[ComponentStyles.buttonText, styles.buttonText]}
                 onPress={this._attemptLogin}
                 isLoading={this.state.isLoading}
-                title="Log in" />
+                title="Log In" />
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
