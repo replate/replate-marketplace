@@ -1,15 +1,20 @@
 import React from 'react';
-import LoginNavigator from './components/login/LoginNavigator'
-import MainNavigator from './components/MainNavigator'
+
+import { 
+  Platform,
+  StatusBar,
+} from 'react-native';
+
+import SplashNavigator from './components/splash/SplashNavigator';
+
+import Colors from './constants/Colors';
 
 export default class App extends React.Component {
   render() {
-    // TODO (amillman): locally store user's email and auth token
-    // for persistent sign-in
-    if (true) {
-      return <MainNavigator />;
-    } else {
-      return <LoginNavigator />;
+    var topPadding = 0;
+    if (Platform.OS === 'android') {
+      topPadding = StatusBar.currentHeight;
     }
+    return <SplashNavigator style={{paddingTop: topPadding, backgroundColor: Colors.main}}/>;
   }
 }

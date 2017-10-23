@@ -1,11 +1,19 @@
-static BASE_URL = 'http://localhost:3000/api/marketplace'
+import { Platform } from 'react-native';
 
 class APIConstants {
 
-  get login() {
+  static get BASE_URL() {
+    host = '10.0.3.2';
+    if (Platform.OS === 'ios') {
+      host = 'localhost';
+    }
+    return 'http://' + host + ':3000/api/marketplace';
+  } 
+
+  static get login() {
     return {
-      signIn: 'marketplace_users/sign_in',
-      changePassword: 'marketplace_users/passwords/update',
+      signIn: this.BASE_URL + '/marketplace_users/sign_in',
+      changePassword: this.BASE_URL + '/marketplace_users/passwords/update',
     }
   }
 }

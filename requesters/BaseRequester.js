@@ -1,34 +1,35 @@
+import LocalStorage from '../helpers/LocalStorage';
+
 class BaseRequester {
 
-  get = (endpoint, success, failure) => {
-    this._request('GET', {}, success, failure);
+  static get(endpoint) {
+    return this._request('GET', endpoint, {});
   }
 
-  post = (endpoint, params, success, failure) => {
-    this._request('POST', params, success, failure);
+  static post(endpoint, params) {
+    return this._request('POST', endpoint, params);
   }
 
-  patch = (endpoint, params, success, failure) => {
-    this._request('PATCH', params, success, failure);
+  static patch(endpoint, params) {
+    return this._request('PATCH', endpoint, params);
   }
 
-  destroy = (endpoint, success, failure) => {
-    this._request('DESTROY', {}, success, failure);
+  static destroy(endpoint) {
+    return this._request('DESTROY', endpoint, {});
   }
 
-  _request = (method, endpoint, params, success, failure) => {
-    fetch(endpoint, {
+  static async _request(method, endpoint, params, success, failure) {
+    var headers = await this._getHeaders();
+    return fetch(endpoint, {
       method: method,
-      headers: this._getHeaders(),
+      headers: headers,
       body: JSON.stringify(params)
-    }).then(this._checkStatus)
-      .then((response) => success(response.json()))
-      .catch((error) => failure(error));
+    }).then(this._checkStatus);
   }
 
-  _checkStatus = (response) => {
+  static _checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
-      return response;
+      return response.json();
     } else {
       let error = new Error(response.statusText);
       error.response = response;
@@ -36,12 +37,18 @@ class BaseRequester {
     }
   }
 
-  _getHeaders = () => {
+  static async _getHeaders(callback) {
     headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     };
-    return headers;
+
+    try {
+      user = await LocalStorage.getUser();
+      headers.X_AUTH_EMAIL = user.email;
+      headers.X_AUTH_TOKEN = user.authentication_token;
+    } catch (error) {}
+    return Promise.resolve(headers);
   }
 }
 
