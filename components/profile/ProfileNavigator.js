@@ -38,6 +38,9 @@ const ProfileNavigator = StackNavigator({
   navigationOptions: ({navigation}) => ({
     ...NavigationStyles.stackHeaderOptions(navigation),
   }),
+  cardStyle: {
+    backgroundColor: Colors.white,
+  },
 });
 
 export default ProfileNavigator;

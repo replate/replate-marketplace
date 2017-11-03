@@ -1,13 +1,17 @@
 import React from 'react';
 
-import { 
+import {
   Platform,
   StatusBar,
+  Text,
 } from 'react-native';
 
 import SplashNavigator from './components/splash/SplashNavigator';
 
 import Colors from './constants/Colors';
+
+// Remove dynamic typing of text sizes (iOS only)
+Text.defaultProps.allowFontScaling = false;
 
 export default class App extends React.Component {
   render() {

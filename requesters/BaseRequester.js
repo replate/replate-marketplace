@@ -1,9 +1,10 @@
 import LocalStorage from '../helpers/LocalStorage';
+import queryString from 'query-string'
 
 class BaseRequester {
 
-  static get(endpoint) {
-    return this._request('GET', endpoint, {});
+  static get(endpoint, params={}) {
+    return this._request('GET', endpoint, params);
   }
 
   static post(endpoint, params) {
@@ -15,15 +16,25 @@ class BaseRequester {
   }
 
   static destroy(endpoint) {
-    return this._request('DESTROY', endpoint, {});
+    return this._request('DESTROY', endpoint);
   }
 
-  static async _request(method, endpoint, params, success, failure) {
+  static async _request(method, endpoint, params={}) {
     var headers = await this._getHeaders();
+    var requestBody = JSON.stringify(params);
+
+    if (method === 'GET') {
+      requestBody = undefined;
+
+      if (Object.keys(params).length > 0) {
+        endpoint += `/?${queryString.stringify(params)}`;
+      }
+    }
+
     return fetch(endpoint, {
       method: method,
       headers: headers,
-      body: JSON.stringify(params)
+      body: requestBody
     }).then(this._checkStatus);
   }
 

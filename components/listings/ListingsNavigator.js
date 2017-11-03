@@ -10,11 +10,13 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import ListingsScreen from './ListingsScreen';
-import ProfileScreen from '../profile/ProfileScreen';
+import ListingDetailScreen from './ListingDetailScreen';
 
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
 import NavigationStyles from '../../constants/NavigationStyles';
+
+import NavigationHelper from '../../helpers/NavigationHelper';
 
 let menuIcon = (navigation) => {
   return (
@@ -35,10 +37,17 @@ const ListingsNavigator = StackNavigator({
       headerLeft: (Platform.OS === 'android') ? menuIcon(navigation) : null
     }),
   },
+  ListingDetail: {
+    screen: NavigationHelper.paramsToProps(ListingDetailScreen),
+  },
 }, {
+  headerMode: 'screen',
   navigationOptions: ({navigation}) => ({
     ...NavigationStyles.stackHeaderOptions(navigation),
   }),
+  cardStyle: {
+    backgroundColor: Colors.white,
+  },
 });
 
 export default ListingsNavigator;

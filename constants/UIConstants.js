@@ -1,11 +1,15 @@
-import { Platform } from 'react-native';
+import {
+  Dimensions,
+  Platform
+} from 'react-native';
 
 class UIConstants {
 
   static get margins() {
     return {
+      large: 20,
+      side: 15,
       standard: 10,
-      side: (Platform.OS === 'ios') ? 15 : 10,
       text: 10,
       tight: 7,
       navbarIcon: (Platform.OS === 'ios') ? 22 : 20,
@@ -14,7 +18,7 @@ class UIConstants {
 
   static get fontSizes() {
     return {
-      largeTitle: 28,
+      largeTitle: 25,
       title: 17,
       normal: 14,
       meta: 12,
@@ -39,6 +43,16 @@ class UIConstants {
   static get iconSizes() {
     return {
       navbar: 22,
+      tabbar: 28,
+      drawer: 24,
+      label: 22,
+    }
+  }
+
+  static get device() {
+    return {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
     }
   }
 }

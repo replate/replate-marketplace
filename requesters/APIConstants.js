@@ -16,6 +16,14 @@ class APIConstants {
       changePassword: this.BASE_URL + '/marketplace_users/passwords/update',
     }
   }
+
+  static get listings() {
+    return {
+      all: this.BASE_URL + '/marketplace_listings',
+      listing: (listing_id) => this.BASE_URL + `/marketplace_listings/${listing_id}`,
+      claim: (listing_id) => this.BASE_URL + `/marketplace_listings/${listing_id}/claim`
+    }
+  }
 }
 
 export default APIConstants;

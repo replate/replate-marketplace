@@ -11,12 +11,7 @@ class LoginRequester extends BaseRequester {
       }
     }
 
-    try {
-      var response_json = await BaseRequester.post(APIConstants.login.signIn, params);
-      return Promise.resolve(response_json.marketplace_user)
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    return BaseRequester.post(APIConstants.login.signIn, params);
   }
 
   static changePassword(new_password) {

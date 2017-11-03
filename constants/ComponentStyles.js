@@ -1,4 +1,4 @@
-import { 
+import {
   Platform,
   StyleSheet,
 } from 'react-native';
@@ -21,6 +21,25 @@ const ComponentStyles = StyleSheet.create({
   title: {
     fontWeight: (Platform.OS === 'ios') ? UIConstants.fontWeights.bold : UIConstants.fontWeights.normal,
   },
+
+  listingItemContainer: {
+    height: UIConstants.device.width * 0.5,
+  },
+
+  listingItemOverlay: {
+    position: 'absolute',
+    zIndex:-1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: Colors.alphaColor(Colors.offBlack, 0.5),
+  },
+
+  listingItemImage: {
+    position: 'absolute',
+    zIndex: -10,
+    width: '100%',
+    height: '100%'
+  }
 });
 
 export default ComponentStyles;
