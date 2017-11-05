@@ -35,7 +35,7 @@ class ListingItem extends React.Component {
           />
           <View style={styles.textContainer}>
             <Text style={styles.title}>
-              Title
+              {this.props.listing.business_name}
             </Text>
             <Text style={styles.address}>
               {this.props.listing.short_address}

@@ -73,15 +73,15 @@ class ListingDetailScreen extends React.Component {
           onScroll={this._onScroll}
           scrollEventThrottle={15}
         >
-          <Text style={styles.title}>Title</Text>
+          <Text style={styles.title}>{this.props.listing.business_name}</Text>
           <IconLabel
             iconName='list'
-            text={'Description of food goes here'} 
+            text={this.props.listing.details}
             style={styles.label}
           />
           <IconLabel
             iconName='people'
-            text={'Serves 100 meals'}
+            text={'Serves ' +  this.props.listing.num_meals + ' meals'}
             style={styles.label}
           />
           <IconLabel
