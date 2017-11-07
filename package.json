@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "backbone-events-standalone": "^0.2.7",
     "expo": "^21.0.2",
     "query-string": "^5.0.1",
     "react": "16.0.0-alpha.12",

@@ -8,6 +8,8 @@ import {
   StyleSheet
 } from 'react-native';
 
+import SectionBorder from '../common/SectionBorder';
+
 import ComponentStyles from '../../constants/ComponentStyles';
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
@@ -41,6 +43,7 @@ class ListingItem extends React.Component {
               {this.props.listing.short_address}
             </Text>
           </View>
+          <SectionBorder />
         </View>
       </TouchableHighlight>
     );
@@ -67,8 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.none,
     fontSize: UIConstants.fontSizes.normal,
     color: Colors.white,
-  }
-
+  },
 })
 
 export default ListingItem;

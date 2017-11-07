@@ -15,6 +15,10 @@ class ListingsRequester extends BaseRequester {
   static getListing(listing) {
     return BaseRequester.get(APIConstants.listings.listing(listing.id));
   }
+
+  static claimListing(listing) {
+    return BaseRequester.post(APIConstants.listings.claim(listing.id));
+  }
 }
 
 export default ListingsRequester;

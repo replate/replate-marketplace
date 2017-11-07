@@ -9,17 +9,13 @@ const ComponentStyles = StyleSheet.create({
 
   buttonContainer: {
     borderRadius: UIConstants.cornerRadii.standard,
-    padding: UIConstants.margins.standard,
+    padding: UIConstants.margins.tight,
   },
 
   buttonText: {
     color: Colors.white,
     fontSize: UIConstants.fontSizes.normal,
     fontWeight: UIConstants.fontWeights.bold,
-  },
-
-  title: {
-    fontWeight: (Platform.OS === 'ios') ? UIConstants.fontWeights.bold : UIConstants.fontWeights.normal,
   },
 
   listingItemContainer: {
@@ -31,14 +27,13 @@ const ComponentStyles = StyleSheet.create({
     zIndex:-1,
     width: '100%',
     height: '100%',
-    backgroundColor: Colors.alphaColor(Colors.offBlack, 0.5),
+    backgroundColor: Colors.alphaColor(Colors.offBlack, 0.6),
   },
 
   listingItemImage: {
-    position: 'absolute',
     zIndex: -10,
-    width: '100%',
-    height: '100%'
+    flex: 1,
+    resizeMode: 'cover',
   }
 });
 

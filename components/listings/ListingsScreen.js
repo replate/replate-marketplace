@@ -11,6 +11,8 @@ import ListingItem from './ListingItem';
 
 import ListingsRequester from '../../requesters/ListingsRequester';
 
+import Events from '../../constants/Events';
+
 class ListingsScreen extends React.Component {
 
   static navigationOptions = {
@@ -54,17 +56,27 @@ class ListingsScreen extends React.Component {
     });
   }
 
+  _removeListing = (listing) => {
+    allListings = this.state.listings;
+    newListings = allListings.filter((l) => l.id !== listing.id);
+    this.setState({
+      listings: newListings,
+    });
+  }
+
   _keyExtractor = (item, index) => {
     return item.id;
   }
 
   _onPressItem = (listing) => {
-    this.props.navigation.navigate('ListingDetail', {listing: listing});
+    this.props.navigation.navigate('ListingDetail', {listing: listing, onClaim: this._removeListing});
   }
 
   render() {
     return (
-      <LoadingView style={styles.container} isLoading={this.state.isLoading}>
+      <LoadingView 
+        style={styles.container} 
+        isLoading={this.state.isLoading}>
         <FlatList
             data={this.state.listings}
             keyExtractor={this._keyExtractor}

@@ -35,7 +35,7 @@ class UIConstants {
 
   static get cornerRadii() {
     return {
-      standard: (Platform.OS === 'ios') ? 5 : 2,
+      standard: (Platform.OS === 'ios') ? 4 : 2,
       large: (Platform.OS === 'ios') ? 10 : 5,
     }
   }

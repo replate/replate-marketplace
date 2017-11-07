@@ -6,9 +6,14 @@ import {
   Text,
 } from 'react-native';
 
+import BackboneEvents from 'backbone-events-standalone';
+
 import SplashNavigator from './components/splash/SplashNavigator';
 
 import Colors from './constants/Colors';
+
+// global event bus
+window.EventBus = BackboneEvents.mixin({});
 
 // Remove dynamic typing of text sizes (iOS only)
 Text.defaultProps.allowFontScaling = false;

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Platform,
 } from 'react-native';
 
 import { Header } from 'react-navigation';
@@ -15,6 +16,7 @@ import MapView from 'react-native-maps';
 
 import IconLabel from '../common/IconLabel';
 import SectionBorder from '../common/SectionBorder';
+import LoadingButton from '../common/LoadingButton';
 
 import ListingsRequester from '../../requesters/ListingsRequester';
 
@@ -22,11 +24,13 @@ import Colors from '../../constants/Colors';
 import NavigationStyles from '../../constants/NavigationStyles';
 import ComponentStyles from '../../constants/ComponentStyles';
 import UIConstants from '../../constants/UIConstants';
+import Events from '../../constants/Events';
 
 class ListingDetailScreen extends React.Component {
 
   static propTypes = {
     listing: PropTypes.object,
+    onClaim: PropTypes.func,
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -34,6 +38,7 @@ class ListingDetailScreen extends React.Component {
       backgroundColor: Colors.none,
       borderBottomWidth: 0,
       elevation: 0,
+      zIndex: 10,
     },
   });
 
@@ -41,11 +46,19 @@ class ListingDetailScreen extends React.Component {
     super(props);
     this.state = {
       scrollOffset: 0,
+      isClaiming: false,
     };
   }
 
   _claim = () => {
-    ListingsRequester.getListings().then((r) => console.log(r)).catch((error) => console.log(error));
+    this.setState({isClaiming: true});
+    ListingsRequester.claimListing(this.props.listing).then((_) => {
+      window.EventBus.trigger(Events.listingClaimed, this.props.listing);
+      this.props.onClaim(this.props.listing);
+      this.props.navigation.goBack();
+    }).catch((error) => {
+      this.setState({isClaiming: false});
+    });
   }
 
   _onScroll = (event) => {
@@ -57,6 +70,7 @@ class ListingDetailScreen extends React.Component {
       <View style={styles.container}>
         <View style={
           [ComponentStyles.listingItemContainer,
+          styles.header,
           {
             height: Math.max(Header.HEIGHT, UIConstants.device.width * 0.5 - this.state.scrollOffset)
           }]
@@ -109,6 +123,15 @@ class ListingDetailScreen extends React.Component {
             </MapView.Marker>
           </MapView>
         </ScrollView>
+        <SectionBorder />
+        <View style={styles.actionsContainer}>
+          <LoadingButton
+            containerStyle={[ComponentStyles.buttonContainer, styles.claimButtonContainer]}
+            style={[ComponentStyles.buttonText, styles.claimButtonText]}
+            onPress={this._claim}
+            isLoading={this.state.isClaiming}
+            title="Claim" />
+        </View>
       </View>
     );
   }
@@ -116,24 +139,26 @@ class ListingDetailScreen extends React.Component {
 
 const styles = StyleSheet.create({
 
+  header: {
+    position: 'absolute',
+    zIndex: 1,
+    left: 0,
+    right: 0,
+    top: 0,
+  },
+
   container: {
-    position: 'relative',
     marginTop: -Header.HEIGHT,
     flex: 1,
   },
 
   scroll: {
-    position: 'absolute',
-    zIndex: -100,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
     flex: 1,
   },
 
   scrollContentContainer: {
     paddingTop: UIConstants.device.width * 0.5,
+    paddingBottom: UIConstants.margins.large,
   },
 
   title: {
@@ -155,8 +180,20 @@ const styles = StyleSheet.create({
 
   map: {
     width: '100%',
-    height: UIConstants.device.width * 0.4,
+    height: UIConstants.device.width,
   },
+
+  actionsContainer: {
+    padding: UIConstants.margins.standard,
+  },
+
+  claimButtonContainer: {
+    backgroundColor: Colors.main,
+  },
+
+  claimButtonText: {
+    color: Colors.white,
+  }
 })
 
 export default ListingDetailScreen;

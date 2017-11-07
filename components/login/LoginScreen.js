@@ -85,7 +85,7 @@ class LoginScreen extends React.Component {
                 underlineColorAndroid='transparent'
               />
               <TextInput
-                style={[styles.input, {marginBottom: 25}]}
+                style={[styles.input, {marginBottom: 15}]}
                 placeholder='Password'
                 placeholderTextColor={Colors.alphaColor(Colors.white, 0.70)}                
                 onChangeText={(text) => this.setState({password: text})}
