@@ -9,8 +9,6 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import ProfileScreen from './ProfileScreen';
-import ListingDetailScreen from '../listings/ListingDetailScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 
 import Colors from '../../constants/Colors';
@@ -31,21 +29,13 @@ let menuIcon = (navigation) => {
   )
 };
 
-const ProfileNavigator = StackNavigator({
-  Profile: {
-    screen: ProfileScreen,
+const SettingsNavigator = StackNavigator({
+  Settings: {
+    screen: SettingsScreen,
     navigationOptions: ({navigation}) => ({
       headerLeft: (Platform.OS === 'android') ? menuIcon(navigation) : null
     }),
   },
-
-  ListingDetail: {
-    screen: NavigationHelper.paramsToProps(ListingDetailScreen),
-  },
-
-  Settings: {
-    screen: NavigationHelper.paramsToProps(SettingsScreen),
-  }
 }, {
   navigationOptions: ({navigation}) => ({
     ...NavigationStyles.stackHeaderOptions(navigation),
@@ -55,4 +45,4 @@ const ProfileNavigator = StackNavigator({
   },
 });
 
-export default ProfileNavigator;
+export default SettingsNavigator;

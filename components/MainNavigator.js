@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import ListingsNavigator from './listings/ListingsNavigator';
 import ProfileNavigator from './profile/ProfileNavigator';
+import SettingsNavigator from './settings/SettingsNavigator';
 
 import BaseRequester from '../requesters/BaseRequester';
 
@@ -62,6 +63,17 @@ const MainNavigator = PlatformSpecificNavigator({
       ),
     },
   },
+  ...(Platform.OS === 'android' ? { 
+    Settings: { 
+      screen: SettingsNavigator,
+      navigationOptions: {
+        drawerLabel: 'Settings',
+        drawerIcon: ({ tintColor }) => (
+          navIcon('settings', tintColor)
+        ),
+      },
+    } 
+  } : {})
 }, {
   // iOS tabbar
   tabBarOptions: {
@@ -82,6 +94,8 @@ const MainNavigator = PlatformSpecificNavigator({
     inactiveTintColor: Colors.offBlack,
     activeBackgroundColor: Colors.offWhite,
   },
+
+  lazy: true,
 });
 
 export default MainNavigator;

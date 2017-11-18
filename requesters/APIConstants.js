@@ -24,6 +24,12 @@ class APIConstants {
       claim: (listing_id) => this.BASE_URL + `/marketplace_listings/${listing_id}/claim`
     }
   }
+
+  static get profile() {
+    return {
+      user: (user_id) => this.BASE_URL + `/marketplace_users/${user_id}`
+    }
+  }
 }
 
 export default APIConstants;

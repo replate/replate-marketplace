@@ -41,6 +41,10 @@ class Colors {
     return this.offBlack;
   }
 
+  static get secondaryText() {
+    return this.darkGray;
+  }
+
   static alphaColor(color, amount) {
     amount = Math.max(Math.min(amount, 1), 0)
     let amountHex = Math.round(amount * 255).toString(16);

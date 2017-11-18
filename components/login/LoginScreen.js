@@ -36,6 +36,7 @@ class LoginScreen extends React.Component {
   }
 
   componentDidMount() {
+    LocalStorage.clearUser();
     BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
   }
 

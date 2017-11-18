@@ -7,46 +7,44 @@ import {
   View,
 } from 'react-native';
 
+import Border from './Border';
+
 import Colors from '../../constants/Colors';
+import UIConstants from '../../constants/UIConstants';
 
 class SectionBorder extends React.Component {
 
   static propTypes = {
     color: PropTypes.string,
+    borderColor: PropTypes.string,
   }
 
   static defaultProps = {
-    color: Colors.lightGray,
+    color: Colors.offWhite,
+    borderColor: Colors.lightGray,
   }
 
   render() {
     return (
-      <View style={{
-        width: '100%', 
-        height: 1 / PixelRatio.get(),
-        backgroundColor: this.props.color
-       }} />
+      <View style={styles.container}>
+        <View style={[
+          {backgroundColor: this.props.color},
+          styles.spacer
+        ]} />
+       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
 
-  indicator: {
-    position: 'absolute',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
+  container: {
+    width: '100%',
+  }, 
 
-  text: {
-    width: '100%', 
-    textAlign: 'center',
+  spacer: {
+    flex: 1,
+    height: 8,
   }
 });
 

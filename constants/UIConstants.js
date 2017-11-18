@@ -9,7 +9,7 @@ class UIConstants {
     return {
       large: 20,
       side: 15,
-      standard: 10,
+      standard: (Platform.OS === 'ios') ? 10 : 15,
       text: 10,
       tight: 7,
       navbarIcon: (Platform.OS === 'ios') ? 22 : 20,

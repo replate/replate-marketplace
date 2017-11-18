@@ -15,7 +15,7 @@ import { Header } from 'react-navigation';
 import MapView from 'react-native-maps';
 
 import IconLabel from '../common/IconLabel';
-import SectionBorder from '../common/SectionBorder';
+import Border from '../common/Border';
 import LoadingButton from '../common/LoadingButton';
 
 import ListingsRequester from '../../requesters/ListingsRequester';
@@ -123,7 +123,7 @@ class ListingDetailScreen extends React.Component {
             </MapView.Marker>
           </MapView>
         </ScrollView>
-        <SectionBorder />
+        <Border />
         <View style={styles.actionsContainer}>
           <LoadingButton
             containerStyle={[ComponentStyles.buttonContainer, styles.claimButtonContainer]}
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: -Header.HEIGHT,
     flex: 1,
+    backgroundColor: Colors.white,
   },
 
   scroll: {
@@ -166,10 +167,8 @@ const styles = StyleSheet.create({
     fontSize: UIConstants.fontSizes.largeTitle,
     color: Colors.primaryText,
     fontWeight: UIConstants.fontWeights.bold,
-    marginLeft: UIConstants.margins.large + UIConstants.iconSizes.label + UIConstants.margins.side,
-    marginRight: UIConstants.margins.large,
-    marginTop: UIConstants.margins.large,
-    marginBottom: UIConstants.margins.large,
+    marginHorizontal: UIConstants.margins.large + UIConstants.iconSizes.label + UIConstants.margins.side,
+    marginVertical: UIConstants.margins.large,
   },
 
   label: {
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   },
 
   actionsContainer: {
-    padding: UIConstants.margins.standard,
+    padding: UIConstants.margins.text,
   },
 
   claimButtonContainer: {

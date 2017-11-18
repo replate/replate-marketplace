@@ -23,12 +23,11 @@ class IconLabel extends React.Component {
 
   render() {
     return (
-      <View style={this.props.style}>
+      <View style={[styles.container, this.props.style]}>
         <Icon 
           name={this.props.iconName} 
           size={UIConstants.iconSizes.label}
           color={Colors.darkGray}
-          style={styles.icon}
         />
         <Text 
           style={styles.text}
@@ -43,15 +42,18 @@ class IconLabel extends React.Component {
 
 const styles = StyleSheet.create({
 
-  icon: {
-    position: 'absolute',
+  container: {
+    flexDirection: 'row',
   },
 
   text: {
-    marginTop: 2,
-    marginLeft: UIConstants.iconSizes.label + UIConstants.margins.side,
+    marginLeft: UIConstants.margins.side,
+    marginTop: -1,
     color: Colors.primaryText,
     fontSize: UIConstants.fontSizes.standard,
+    lineHeight: UIConstants.iconSizes.label,
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });
 
