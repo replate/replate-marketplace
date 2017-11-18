@@ -5,11 +5,15 @@ import {
 
 import LoginScreen from './LoginScreen';
 import MainNavigator from '../MainNavigator';
+import ResetPasswordScreen from './ResetPasswordScreen'
 
 
-const LoginNavigator = StackNavigator({  
+const LoginNavigator = StackNavigator({
   Login: {
     screen: LoginScreen
+  },
+  ResetPassword: {
+    screen: ResetPasswordScreen
   },
   Main: {
     screen: MainNavigator

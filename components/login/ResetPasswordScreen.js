@@ -24,19 +24,20 @@ import Colors from '../../constants/Colors'
 import LoginRequester from '../../requesters/LoginRequester'
 import LocalStorage from '../../helpers/LocalStorage'
 
-class LoginScreen extends React.Component {
+class ResetPasswordScreen extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      email: 'd@d.com',
-      password: 'LQLwPwm1',
+      user_id: this.props.navigation.state.params.user.id,
+      current_password: '',
+      password: '',
+      password_confirmation: '',
       isLoading: false,
     }
   }
 
   componentDidMount() {
-    LocalStorage.clearUser();
     BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
   }
 
@@ -48,16 +49,12 @@ class LoginScreen extends React.Component {
     return true;
   }
 
-  _attemptLogin = () => {
-    success = (user) => {
-      LocalStorage.storeUser(user);
-      if (user.has_reset_password) {
-        this.props.navigation.navigate('Main');
-      } else {
-        this.props.navigation.navigate('ResetPassword', { user })
-      }
+  _attemptUpdatePassword = () => {
+    success = (response) => {
+      this.props.navigation.navigate('Main');
     };
 
+    // TODO (jonmchu) : handle error
     failure = (error) => {
       this.setState({
         isLoading: false,
@@ -68,7 +65,9 @@ class LoginScreen extends React.Component {
       isLoading: true,
     });
 
-    LoginRequester.signIn(this.state.email, this.state.password).then(success).catch(failure);
+    LoginRequester.changePassword(this.state.user_id,
+      this.state.password,
+      this.state.password_confirmation).then(success).catch(failure);
   }
 
   render() {
@@ -81,28 +80,29 @@ class LoginScreen extends React.Component {
           >
             <View style={styles.contentWrapper}>
               <Image style={styles.logo} source={require('../../assets/logo-white.png')} />
-              <View><Text style={styles.title}>Replate Marketplace</Text></View>
+              <View><Text style={styles.title}>Password Reset</Text></View>
               <TextInput
-                style={styles.input}
-                placeholder='Email'
+                style={[styles.input, {marginBottom: 15}]}
+                placeholder='New Password'
                 placeholderTextColor={Colors.alphaColor(Colors.white, 0.70)}
-                onChangeText={(text) => this.setState({email: text})}
+                onChangeText={(text) => this.setState({password: text})}
                 underlineColorAndroid='transparent'
+                secureTextEntry
               />
               <TextInput
                 style={[styles.input, {marginBottom: 15}]}
-                placeholder='Password'
+                placeholder='Confirm New Password'
                 placeholderTextColor={Colors.alphaColor(Colors.white, 0.70)}
-                onChangeText={(text) => this.setState({password: text})}
+                onChangeText={(text) => this.setState({password_confirmation: text})}
                 underlineColorAndroid='transparent'
                 secureTextEntry
               />
               <LoadingButton
                 containerStyle={[ComponentStyles.buttonContainer, styles.buttonContainer]}
                 style={[ComponentStyles.buttonText, styles.buttonText]}
-                onPress={this._attemptLogin}
+                onPress={this._attemptUpdatePassword}
                 isLoading={this.state.isLoading}
-                title="Log In" />
+                title="Update Password" />
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+export default ResetPasswordScreen;

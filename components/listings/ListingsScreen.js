@@ -74,8 +74,8 @@ class ListingsScreen extends React.Component {
 
   render() {
     return (
-      <LoadingView 
-        style={styles.container} 
+      <LoadingView
+        style={styles.container}
         isLoading={this.state.isLoading}>
         <FlatList
             data={this.state.listings}

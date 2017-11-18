@@ -8,12 +8,12 @@ class APIConstants {
       host = 'localhost';
     }
     return 'http://' + host + ':3000/api/marketplace';
-  } 
+  }
 
   static get login() {
     return {
       signIn: this.BASE_URL + '/marketplace_users/sign_in',
-      changePassword: this.BASE_URL + '/marketplace_users/passwords/update',
+      changePassword: (user_id) => this.BASE_URL + `/marketplace_users/${user_id}/update_password`,
     }
   }
 
