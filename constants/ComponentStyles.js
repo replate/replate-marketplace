@@ -34,7 +34,7 @@ const ComponentStyles = StyleSheet.create({
     zIndex: -10,
     flex: 1,
     resizeMode: 'cover',
-  }
+  },
 });
 
 export default ComponentStyles;

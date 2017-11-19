@@ -9,8 +9,8 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import ListingsScreen from './ListingsScreen';
-import ListingDetailScreen from './ListingDetailScreen';
+import ActivePickupsScreen from './ActivePickupsScreen';
+import ListingDetailScreen from '../listings/ListingDetailScreen';
 
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
@@ -30,14 +30,14 @@ let menuIcon = (navigation) => {
   )
 };
 
-const ListingsNavigator = StackNavigator({
-  Listings: {
-    screen: ListingsScreen,
+const ActivePickupsNavigator = StackNavigator({
+  Active: {
+    screen: ActivePickupsScreen,
     navigationOptions: ({navigation}) => ({
       headerLeft: (Platform.OS === 'android') ? menuIcon(navigation) : null
     }),
   },
-  ListingDetail: {
+  ActiveDetail: {
     screen: NavigationHelper.paramsToProps(ListingDetailScreen),
   },
 }, {
@@ -50,4 +50,4 @@ const ListingsNavigator = StackNavigator({
   },
 });
 
-export default ListingsNavigator;
+export default ActivePickupsNavigator;

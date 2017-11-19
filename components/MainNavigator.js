@@ -1,5 +1,5 @@
 import React from 'react';
-import { 
+import {
   Button,
   Platform
 } from 'react-native';
@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import ListingsNavigator from './listings/ListingsNavigator';
 import ProfileNavigator from './profile/ProfileNavigator';
+import ActivePickupsNavigator from './active_pickups/ActivePickupsNavigator';
 import SettingsNavigator from './settings/SettingsNavigator';
 
 import BaseRequester from '../requesters/BaseRequester';
@@ -24,7 +25,7 @@ let navIcon = (name, tintColor) => {
   return (
     <Icon
       name={name}
-      size={(Platform.OS === 'android') ? UIConstants.iconSizes.drawer : UIConstants.iconSizes.tabbar} 
+      size={(Platform.OS === 'android') ? UIConstants.iconSizes.drawer : UIConstants.iconSizes.tabbar}
       color={tintColor}
     />
   )
@@ -47,6 +48,19 @@ const MainNavigator = PlatformSpecificNavigator({
       drawerLabel: 'Listings',
       drawerIcon: ({ tintColor }) => (
         navIcon('view-stream', tintColor)
+      ),
+    },
+  },
+  Active: {
+    screen: ActivePickupsNavigator,
+    navigationOptions: {
+      tabBarLabel: 'Active Pickups',
+      tabBarIcon: ({ tintColor }) => (
+        navIcon('local-shipping', tintColor)
+      ),
+      drawerLabel: 'Active Pickups',
+      drawerIcon: ({ tintColor }) => (
+        navIcon('local-shipping', tintColor)
       ),
     },
   },

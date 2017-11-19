@@ -4,6 +4,10 @@ class Events {
     return 'listingClaimed';
   }
 
+  static get claimCancelled() {
+    return 'claimCancelled';
+  }
+
 }
 
 export default Events;

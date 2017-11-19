@@ -7,17 +7,19 @@ import {
 
 import LoadingView from '../common/LoadingView';
 
-import ListingItem from './ListingItem';
+import ListingItem from '../listings/ListingItem';
 
 import ListingsRequester from '../../requesters/ListingsRequester';
 
 import Events from '../../constants/Events';
 
-class ListingsScreen extends React.Component {
+import ListingsScreen from '../listings/ListingsScreen';
 
-  static navigationOptions = {
-    title: 'Listings',
-  }
+class ActivePickupsScreen extends React.Component {
+
+  static navigationOptions = ({navigation}) => ({
+    title: 'Active Pickups',
+  });
 
   constructor(props) {
     super(props);
@@ -31,16 +33,16 @@ class ListingsScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._getListings();
-    window.EventBus.on(Events.claimCancelled, this._addListing);
+    this._getActiveListings();
+    window.EventBus.on(Events.listingClaimed, this._addListing);
   }
 
   componentWillDismount() {
-    window.EventBus.off(Events.claimCancelled, this._addListing);
+    window.EventBus.off(Events.listingClaimed, this._addListing);
   }
 
-  _getListings = () => {
-    ListingsRequester.getListings(this.state.region).then((listings) =>  {
+  _getActiveListings = () => {
+    ListingsRequester.getActiveListings().then((listings) =>  {
       this.setState({
         listings: listings,
         isRefreshing: false,
@@ -57,7 +59,7 @@ class ListingsScreen extends React.Component {
 
   _refresh = () => {
     this.setState({isRefreshing: true}, () => {
-      this._getListings();
+      this._getActiveListings();
     });
   }
 
@@ -83,14 +85,12 @@ class ListingsScreen extends React.Component {
   }
 
   _onPressItem = (listing) => {
-    this.props.navigation.navigate('ListingDetail', {listing: listing, onClaim: this._removeListing});
+    this.props.navigation.navigate('ActiveDetail', {listing: listing, onCancel: this._removeListing});
   }
 
   render() {
     return (
-      <LoadingView
-        style={styles.container}
-        isLoading={this.state.isLoading}>
+      <LoadingView style={styles.container} isLoading={this.state.isLoading}>
         <FlatList
             data={this.state.listings}
             keyExtractor={this._keyExtractor}
@@ -98,6 +98,7 @@ class ListingsScreen extends React.Component {
               <ListingItem
                 listing={item}
                 onPressItem={this._onPressItem}
+                active
               />
             }
             refreshing={this.state.isRefreshing}
@@ -114,4 +115,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ListingsScreen;
+export default ActivePickupsScreen;

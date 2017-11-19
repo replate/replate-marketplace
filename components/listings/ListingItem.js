@@ -8,7 +8,8 @@ import {
   StyleSheet
 } from 'react-native';
 
-import Border from '../common/Border';
+import SectionBorder from '../common/SectionBorder';
+import Tag from '../common/Tag';
 
 import ComponentStyles from '../../constants/ComponentStyles';
 import Colors from '../../constants/Colors';
@@ -19,6 +20,11 @@ class ListingItem extends React.Component {
   static propTypes = {
     listing: PropTypes.object,
     onPressItem: PropTypes.func,
+    active: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    active: false
   }
 
   _onPress = () => {
@@ -26,6 +32,10 @@ class ListingItem extends React.Component {
   }
 
   render() {
+    let tag = null;
+    if (this.props.active) {
+      tag = <Tag text="Active" color={Colors.blue}/>
+    }
     return (
       <TouchableHighlight
         onPress= {this._onPress} >
@@ -43,7 +53,8 @@ class ListingItem extends React.Component {
               {this.props.listing.short_address}
             </Text>
           </View>
-          <Border />
+          {tag}
+          <SectionBorder />
         </View>
       </TouchableHighlight>
     );

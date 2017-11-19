@@ -17,7 +17,6 @@ import MapView from 'react-native-maps';
 import IconLabel from '../common/IconLabel';
 import Border from '../common/Border';
 import LoadingButton from '../common/LoadingButton';
-
 import ListingsRequester from '../../requesters/ListingsRequester';
 
 import Colors from '../../constants/Colors';
@@ -25,12 +24,14 @@ import NavigationStyles from '../../constants/NavigationStyles';
 import ComponentStyles from '../../constants/ComponentStyles';
 import UIConstants from '../../constants/UIConstants';
 import Events from '../../constants/Events';
+import ModelConstants from '../../constants/ModelConstants';
 
 class ListingDetailScreen extends React.Component {
 
   static propTypes = {
     listing: PropTypes.object,
     onClaim: PropTypes.func,
+    onCancel: PropTypes.func,
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -52,9 +53,20 @@ class ListingDetailScreen extends React.Component {
 
   _claim = () => {
     this.setState({isClaiming: true});
-    ListingsRequester.claimListing(this.props.listing).then((_) => {
-      window.EventBus.trigger(Events.listingClaimed, this.props.listing);
-      this.props.onClaim(this.props.listing);
+    ListingsRequester.claimListing(this.props.listing).then((listing) => {
+      window.EventBus.trigger(Events.listingClaimed, listing);
+      this.props.onClaim(listing);
+      this.props.navigation.goBack();
+    }).catch((error) => {
+      this.setState({isClaiming: false});
+    });
+  }
+
+  _cancel = () => {
+    this.setState({isClaiming: true});
+    ListingsRequester.cancelClaim(this.props.listing).then((listing) => {
+      window.EventBus.trigger(Events.claimCancelled, listing);
+      this.props.onCancel(listing);
       this.props.navigation.goBack();
     }).catch((error) => {
       this.setState({isClaiming: false});
@@ -66,6 +78,22 @@ class ListingDetailScreen extends React.Component {
   }
 
   render() {
+    let button = (
+      <LoadingButton
+      containerStyle={[ComponentStyles.buttonContainer, styles.claimButtonContainer]}
+      style={[ComponentStyles.buttonText, styles.claimButtonText]}
+      onPress={this._claim}
+      isLoading={this.state.isClaiming}
+      title="Claim" />)
+    if (this.props.listing.state == ModelConstants.listing.state.CLAIMED) {
+      button = (
+        <LoadingButton
+        containerStyle={[ComponentStyles.buttonContainer, styles.cancelButtonContainer]}
+        style={[ComponentStyles.buttonText, styles.claimButtonText]}
+        onPress={this._cancel}
+        isLoading={this.state.isClaiming}
+        title="Cancel" />)
+    }
     return (
       <View style={styles.container}>
         <View style={
@@ -125,12 +153,7 @@ class ListingDetailScreen extends React.Component {
         </ScrollView>
         <Border />
         <View style={styles.actionsContainer}>
-          <LoadingButton
-            containerStyle={[ComponentStyles.buttonContainer, styles.claimButtonContainer]}
-            style={[ComponentStyles.buttonText, styles.claimButtonText]}
-            onPress={this._claim}
-            isLoading={this.state.isClaiming}
-            title="Claim" />
+          {button}
         </View>
       </View>
     );
@@ -188,6 +211,10 @@ const styles = StyleSheet.create({
 
   claimButtonContainer: {
     backgroundColor: Colors.main,
+  },
+
+  cancelButtonContainer: {
+    backgroundColor: Colors.red,
   },
 
   claimButtonText: {
