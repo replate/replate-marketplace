@@ -5,7 +5,7 @@
 
 About Blueprint
 ---
-<img src="https://imgur.com/a/iR9Ah" width="120" alt="Blueprint logo" /><br />
+<img src="https://i.imgur.com/W9ankhO.png" width="120" alt="Blueprint logo" /><br />
 [Blueprint](http://calblueprint.org) is a student-run UC Berkeley organization devoted to matching the skills of its members to our desire to see social good enacted in our community. Each semester, teams of 4-5 students work closely with a non-profit to bring technological solutions to the problems they face every day.
 
 React Native
