@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
+  Alert,
   Platform,
   SectionList,
   StyleSheet,
@@ -45,7 +46,12 @@ class SettingsScreen extends React.Component {
   _handleEvent = (item) => {
     switch(item.title) {
       case LOGOUT:
-        this.props.navigation.navigate('Login')
+        Alert.alert(
+          'Logout',
+          'Are you sure you would like to logout?',
+          [{text: 'Close'},
+          {text: 'Confirm', onPress: () => this.props.navigation.navigate('Login')},]
+        )
     }
   }
 
@@ -57,19 +63,19 @@ class SettingsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <SectionList
-          sections={[ 
+          sections={[
             {data: this.state.personal_items, title: 'Personal'},
             {data: this.state.more_items, title: 'More'}
           ]}
           keyExtractor={this._keyExtractor}
           renderItem={ ({item}) =>
-            <ListRow 
-              style={styles.row} 
+            <ListRow
+              style={styles.row}
               showCaret={item.title !== LOGOUT}
               onPress={() => this._handleEvent(item)}
             >
-              <IconLabel 
-                iconName={item.icon} 
+              <IconLabel
+                iconName={item.icon}
                 text={item.title}
               />
             </ListRow>

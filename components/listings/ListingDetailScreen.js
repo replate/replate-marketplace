@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Alert,
   Button,
   Image,
   ScrollView,
@@ -82,7 +83,12 @@ class ListingDetailScreen extends React.Component {
       <LoadingButton
       containerStyle={[ComponentStyles.buttonContainer, styles.claimButtonContainer]}
       style={[ComponentStyles.buttonText, styles.claimButtonText]}
-      onPress={this._claim}
+      onPress={() => Alert.alert(
+        'Claim Listing',
+        'Are you sure you would like to claim this listing?',
+        [{text: 'Close'},
+          {text: 'Confirm', onPress: this._claim},]
+      )}
       isLoading={this.state.isClaiming}
       title="Claim" />)
     if (this.props.listing.state == ModelConstants.listing.state.CLAIMED) {
@@ -90,7 +96,12 @@ class ListingDetailScreen extends React.Component {
         <LoadingButton
         containerStyle={[ComponentStyles.buttonContainer, styles.cancelButtonContainer]}
         style={[ComponentStyles.buttonText, styles.claimButtonText]}
-        onPress={this._cancel}
+        onPress={() => Alert.alert(
+          'Cancel Claim',
+          'Are you sure you would like to cancel your pickup for this listing?',
+          [{text: 'Close'},
+            {text: 'Confirm', onPress: this._cancel},]
+        )}
         isLoading={this.state.isClaiming}
         title="Cancel" />)
     }
