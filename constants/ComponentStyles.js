@@ -18,6 +18,17 @@ const ComponentStyles = StyleSheet.create({
     fontWeight: UIConstants.fontWeights.bold,
   },
 
+  navButtonContainer: {
+    height: UIConstants.iconSizes.navbar,
+    paddingHorizontal: UIConstants.margins.navbarIcon,
+  },
+
+  navButtonText: {
+    color: Colors.white,
+    fontSize: Platform.OS === 'android' ? UIConstants.fontSizes.normal : UIConstants.fontSizes.title,
+    fontWeight: UIConstants.fontWeights.bold,
+  },
+
   listingItemContainer: {
     height: UIConstants.device.width * 0.5,
   },

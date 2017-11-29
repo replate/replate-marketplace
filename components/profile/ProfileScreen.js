@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
   BackHandler,
   Platform,
   SectionList,
@@ -25,16 +25,21 @@ import Colors from '../../constants/Colors';
 import Events from '../../constants/Events';
 import UIConstants from '../../constants/UIConstants';
 
-import ProfileRequester from '../../requesters/ProfileRequester';
+import UserRequester from '../../requesters/UserRequester';
 
 const headerHeight = 2 * Header.HEIGHT;
 
 let settingsIcon = (navigation) => {
+
+  if (Platform.OS === 'android') {
+    return null;
+  }
+
   return (
     <Icon
       name='settings'
-      onPress={()=> navigation.navigate('Settings')}
-      size={UIConstants.iconSizes.navbar} 
+      onPress={()=> {navigation.navigate('Settings', {user: navigation.state.params.user})}}
+      size={UIConstants.iconSizes.navbar}
       color={Colors.white}
       style={{padding: UIConstants.margins.navbarIcon}}
     />
@@ -60,22 +65,34 @@ class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
+      user: {
+        active_listings: [],
+        completed_listings: [],
+        marketplace_region: {}
+      },
       scrollOffset: 0,
       isRefreshing: true,
       isLoading: true,
     };
   }
 
+  componentWillMount() {
+    this.props.navigation.setParams({
+       user: this.state.user,
+    });
+  }
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
     window.EventBus.on(Events.listingClaimed, this._addActiveListing);
+    window.EventBus.on(Events.userUpdated, this._updateUser);
     this._getCurrentUser();
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this._handleBackButton);
     window.EventBus.off(Events.listingClaimed, this._addActiveListing);
+    window.EventBus.off(Events.userUpdated, this._updateUser);
   }
 
   _handleBackButton() {
@@ -83,19 +100,21 @@ class ProfileScreen extends React.Component {
   }
 
   _getCurrentUser = () => {
-    ProfileRequester.getCurrentUser().then((user) =>  {
+    UserRequester.getCurrentUser().then((user) =>  {
       this.setState({
         user: user,
         isRefreshing: false,
         isLoading: false,
       });
+      this.props.navigation.setParams({
+        user: user
+      });
     }).catch((error) => {
       this.setState({
         isRefreshing: false,
-        isLoading: true,
+        isLoading: false,
       });
     });
-
   }
 
   _onScroll = (event) => {
@@ -116,6 +135,18 @@ class ProfileScreen extends React.Component {
     this.state.user.active_listings.splice(0, 0, listing);
     this.setState({
       user: this.state.user,
+    });
+    this.props.navigation.setParams({
+      user: user,
+    });
+  }
+
+  _updateUser = (user) => {
+    this.setState({
+      user: user,
+    });
+    this.props.navigation.setParams({
+      user: user,
     });
   }
 
@@ -164,15 +195,15 @@ class ProfileScreen extends React.Component {
         }>
           <Text style={styles.name}>{this.state.user.full_name}</Text>
         </View>
-        <LoadingView 
+        <LoadingView
           style={
-            (this.state.isLoading) 
-            ? [styles.headerPadding, styles.loadingContainer] 
+            (this.state.isLoading)
+            ? [styles.headerPadding, styles.loadingContainer]
             : styles.loadingContainer
-          } 
+          }
           isLoading={this.state.isLoading}>
           <SectionList
-            sections={[ 
+            sections={[
               {data: this.state.user.active_listings, title: 'Active Listings'},
               {data: this.state.user.completed_listings, title: 'Completed Listings'}
             ]}
@@ -239,7 +270,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontWeight: UIConstants.fontWeights.bold,
     left: UIConstants.margins.large + UIConstants.iconSizes.label + UIConstants.margins.side,
-    right: UIConstants.margins.large,
+    right: UIConstants.margins.large + UIConstants.iconSizes.label + UIConstants.margins.side,
     bottom: UIConstants.margins.large,
   },
 

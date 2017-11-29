@@ -8,6 +8,9 @@ class Events {
     return 'claimCancelled';
   }
 
+  static get userUpdated() {
+    return 'userUpdated';
+  }
 }
 
 export default Events;

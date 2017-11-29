@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Platform,
   StyleSheet,
-  Text,
+  TextInput,
   View,
   ViewPropTypes,
 } from 'react-native';
@@ -12,15 +13,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
 
-class IconLabel extends React.Component {
+class IconInput extends React.Component {
 
   static propTypes = {
-    style: ViewPropTypes.style,
+    ...TextInput.propTypes,
+    containerStyle: ViewPropTypes.style,
     iconColor: PropTypes.string,
     textColor: PropTypes.string,
     iconName: PropTypes.string,
-    text: PropTypes.string,
-    selectable: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -36,12 +36,12 @@ class IconLabel extends React.Component {
           size={UIConstants.iconSizes.label}
           color={this.props.iconColor}
         />
-        <Text
-          style={[styles.text, {color: this.props.textColor}]}
-          selectable={this.props.selectable}
-        >
-          {this.props.text}
-        </Text>
+        <TextInput
+          {...this.props}
+          style={[this.props.style, styles.textInput, {color: this.props.textColor}]}
+          placholderTextColor={Colors.alphaColor(this.props.textColor, 0.70)}
+          underlineColorAndroid='transparent'
+        />
       </View>
     );
   }
@@ -53,14 +53,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  text: {
-    marginLeft:UIConstants.margins.side,
-    marginTop: -1,
+  textInput: {
+    marginTop: (Platform.OS === 'android') ? -2 : -1,
+    marginLeft: UIConstants.margins.side,
     fontSize: UIConstants.fontSizes.normal,
-    lineHeight: UIConstants.iconSizes.label,
+    paddingBottom: 0,
     flex: 1,
-    flexWrap: 'wrap',
   },
 });
 
-export default IconLabel;
+export default IconInput;

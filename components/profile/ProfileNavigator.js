@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ProfileScreen from './ProfileScreen';
 import ListingDetailScreen from '../listings/ListingDetailScreen';
 import SettingsScreen from '../settings/SettingsScreen';
+import SettingsNavigator from '../settings/SettingsNavigator';
 
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
@@ -24,7 +25,7 @@ let menuIcon = (navigation) => {
     <Icon
       name='menu'
       onPress={()=> navigation.navigate('DrawerOpen')}
-      size={UIConstants.iconSizes.navbar} 
+      size={UIConstants.iconSizes.navbar}
       color={Colors.white}
       style={{padding: UIConstants.margins.navbarIcon}}
     />
@@ -43,9 +44,13 @@ const ProfileNavigator = StackNavigator({
     screen: NavigationHelper.paramsToProps(ListingDetailScreen),
   },
 
-  Settings: {
-    screen: NavigationHelper.paramsToProps(SettingsScreen),
-  }
+  ...(Platform.OS === 'ios' ? {
+    Settings: {
+      screen: NavigationHelper.paramsToProps(SettingsScreen),
+    }
+  } : {}),
+
+  ...SettingsNavigator.detailPages,
 }, {
   navigationOptions: ({navigation}) => ({
     ...NavigationStyles.stackHeaderOptions(navigation),

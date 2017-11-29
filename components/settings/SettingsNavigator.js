@@ -9,7 +9,8 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import SettingsScreen from '../settings/SettingsScreen';
+import SettingsScreen from './SettingsScreen';
+import EditProfileScreen from './EditProfileScreen';
 
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
@@ -22,12 +23,18 @@ let menuIcon = (navigation) => {
     <Icon
       name='menu'
       onPress={()=> navigation.navigate('DrawerOpen')}
-      size={UIConstants.iconSizes.navbar} 
+      size={UIConstants.iconSizes.navbar}
       color={Colors.white}
       style={{padding: UIConstants.margins.navbarIcon}}
     />
   )
 };
+
+const SettingsDetailPages = {
+  EditProfile: {
+    screen: NavigationHelper.paramsToProps(EditProfileScreen),
+  }
+}
 
 const SettingsNavigator = StackNavigator({
   Settings: {
@@ -36,6 +43,7 @@ const SettingsNavigator = StackNavigator({
       headerLeft: (Platform.OS === 'android') ? menuIcon(navigation) : null
     }),
   },
+  ...SettingsDetailPages,
 }, {
   navigationOptions: ({navigation}) => ({
     ...NavigationStyles.stackHeaderOptions(navigation),
@@ -44,5 +52,7 @@ const SettingsNavigator = StackNavigator({
     backgroundColor: Colors.white,
   },
 });
+
+SettingsNavigator.detailPages = SettingsDetailPages;
 
 export default SettingsNavigator;

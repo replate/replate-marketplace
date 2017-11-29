@@ -12,7 +12,7 @@ class UIConstants {
       standard: (Platform.OS === 'ios') ? 10 : 15,
       text: 10,
       tight: 7,
-      navbarIcon: (Platform.OS === 'ios') ? 22 : 20,
+      navbarIcon: (Platform.OS === 'ios') ? 18 : 20,
     }
   }
 

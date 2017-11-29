@@ -77,8 +77,8 @@ const MainNavigator = PlatformSpecificNavigator({
       ),
     },
   },
-  ...(Platform.OS === 'android' ? { 
-    Settings: { 
+  ...(Platform.OS === 'android' ? {
+    Settings: {
       screen: SettingsNavigator,
       navigationOptions: {
         drawerLabel: 'Settings',
@@ -86,7 +86,7 @@ const MainNavigator = PlatformSpecificNavigator({
           navIcon('settings', tintColor)
         ),
       },
-    } 
+    }
   } : {})
 }, {
   // iOS tabbar

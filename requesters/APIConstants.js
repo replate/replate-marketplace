@@ -31,6 +31,12 @@ class APIConstants {
       user: (user_id) => this.BASE_URL + `/marketplace_users/${user_id}`
     }
   }
+
+  static get users() {
+    return {
+      user: (user_id) => this.BASE_URL + `/marketplace_users/${user_id}`,
+    }
+  }
 }
 
 export default APIConstants;

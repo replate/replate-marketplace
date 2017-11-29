@@ -8,7 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import SectionBorder from '../common/SectionBorder';
+import Border from '../common/Border';
 import Tag from '../common/Tag';
 
 import ComponentStyles from '../../constants/ComponentStyles';
@@ -54,7 +54,7 @@ class ListingItem extends React.Component {
             </Text>
           </View>
           {tag}
-          <SectionBorder />
+          <Border />
         </View>
       </TouchableHighlight>
     );

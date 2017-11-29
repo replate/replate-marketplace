@@ -16,6 +16,8 @@ import ListRow from '../common/ListRow';
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
 
+import LocalStorage from '../../helpers/LocalStorage';
+
 const PROFILE = 'Profile';
 const REGION = 'Region';
 const PASSWORD = 'Password';
@@ -28,9 +30,14 @@ class SettingsScreen extends React.Component {
     title: 'Settings',
   }
 
+  static propTypes = {
+    user: PropTypes.object,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
+      user: this.props.user,
       personal_items: [
         {title: PROFILE, icon: 'person'},
         {title: REGION, icon: 'pin-drop'},
@@ -43,8 +50,30 @@ class SettingsScreen extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (this.props.user == null) {
+      LocalStorage.getUser().then((user) => {
+        this.setState({
+          user: user,
+        });
+      }).catch((error) => {});
+    }
+  }
+
+  _updateUser = (user) => {
+    this.setState({
+      user: user,
+    });
+  }
+
   _handleEvent = (item) => {
     switch(item.title) {
+      case PROFILE:
+        this.props.navigation.navigate('EditProfile', {
+          user: this.state.user,
+          onUserUpdate: this._updateUser,
+        });
+        break;
       case LOGOUT:
         Alert.alert(
           'Logout',
