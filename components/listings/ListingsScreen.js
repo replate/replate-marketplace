@@ -13,17 +13,22 @@ import ListingsRequester from '../../requesters/ListingsRequester';
 
 import Events from '../../constants/Events';
 
+import LocalStorage from '../../helpers/LocalStorage'
+
 class ListingsScreen extends React.Component {
 
-  static navigationOptions = {
-    title: 'Listings',
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      title: params.title || '',
+    };
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      region: {id: 1}, // TODO: make dependent on user region
+      region: null,
       listings: [],
       isLoading: true,
       isRefreshing: false,
@@ -31,7 +36,14 @@ class ListingsScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._getListings();
+    LocalStorage.getUser().then((user) => {
+      this.setState({ region: user.marketplace_region }, () => {
+        this.props.navigation.setParams({ title: this.state.region.region + " Marketplace" });
+        this._getListings();
+      });
+    }).catch((error) => {
+      // TODO (jonmchu): handle error
+    });
     window.EventBus.on(Events.claimCancelled, this._addListing);
   }
 
