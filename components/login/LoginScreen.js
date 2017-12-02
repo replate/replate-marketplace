@@ -52,14 +52,15 @@ class LoginScreen extends React.Component {
   _attemptLogin = () => {
     success = (user) => {
       if (user.has_reset_password) {
+        window.showBanner('success', 'Welcome!');
         this.props.navigation.navigate('Main');
       } else {
         this.props.navigation.navigate('ResetPassword', { user })
       }
     };
 
-    failure = (json) => {
-      Alert.alert(json.error.message);
+    failure = (error) => {
+      window.showBanner('error', error.message);
       this.setState({
         isLoading: false,
       });

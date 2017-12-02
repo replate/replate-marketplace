@@ -75,6 +75,7 @@ class EditRegionScreen extends React.Component {
     success = (user) => {
       window.EventBus.trigger(Events.userUpdated, user);
       window.EventBus.trigger(Events.regionUpdated, user.marketplace_region);
+      window.showBanner('success', `Joined ${user.marketplace_region.region} Marketplace`);
       this.props.onUserUpdate(user);
       this.setState({
         isUpdating: false,
@@ -86,6 +87,7 @@ class EditRegionScreen extends React.Component {
     };
 
     failure = (error) => {
+      window.showBanner('error', error.message);
       this.setState({
         isUpdating: false,
       });

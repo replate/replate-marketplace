@@ -54,8 +54,8 @@ class ResetPasswordScreen extends React.Component {
       this.props.navigation.navigate('Main');
     };
 
-    // TODO (jonmchu) : handle error
     failure = (error) => {
+      window.showBanner('error', error.message);
       this.setState({
         isLoading: false,
       });

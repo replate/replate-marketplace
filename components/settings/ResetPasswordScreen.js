@@ -68,6 +68,7 @@ class EditProfileScreen  extends React.Component {
 
   _resetPassword = () => {
     success = () => {
+      window.showBanner('success', 'Password reset');
       this.setState({
         isUpdating: false,
       });
@@ -78,6 +79,7 @@ class EditProfileScreen  extends React.Component {
     };
 
     failure = (error) => {
+      window.showBanner('error', error.message);
       this.setState({
         isUpdating: false,
       });

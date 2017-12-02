@@ -49,6 +49,14 @@ class UIConstants {
     }
   }
 
+  static get animations() {
+    return {
+      fast: 150,
+      normal: 250,
+      slow: 400,
+    }
+  }
+
   static get device() {
     return {
       width: Dimensions.get('window').width,

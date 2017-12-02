@@ -59,17 +59,18 @@ class ListingDetailScreen extends React.Component {
       window.EventBus.trigger(Events.listingClaimed, listing);
       this.props.onClaim(listing);
       LocalStorage.userHasClaimed().then(() => {
-        // TODO: banner popup
+        window.showBanner('success', 'Claimed!');
         this.props.navigation.goBack();
       }).catch((error) => {
         Alert.alert(
           'Launch Onfleet',
-          'Please launch the Onfleet driver app to complete your pickup.',
+          'Congratulations on your claim! Please launch the Onfleet driver app to complete your pickup.',
           [{text: 'Close', onPress: () => this.props.navigation.goBack()}]
         )
         LocalStorage.storeUserHasClaimed(true);
       });
     }).catch((error) => {
+      window.showBanner('error', error.message);
       this.setState({isClaiming: false});
     });
   }
@@ -78,9 +79,11 @@ class ListingDetailScreen extends React.Component {
     this.setState({isClaiming: true});
     ListingsRequester.cancelClaim(this.props.listing).then((listing) => {
       window.EventBus.trigger(Events.claimCancelled, listing);
+      window.showBanner('success', 'Cancelled');
       this.props.onCancel(listing);
       this.props.navigation.goBack();
     }).catch((error) => {
+      window.showBanner('error', error.message);
       this.setState({isClaiming: false});
     });
   }

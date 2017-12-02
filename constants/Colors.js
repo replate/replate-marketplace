@@ -37,6 +37,10 @@ class Colors {
     return '#3498db'
   }
 
+  static get green() {
+    return '#2ecc71';
+  }
+
   static get none() {
     return '#00000000';
   }

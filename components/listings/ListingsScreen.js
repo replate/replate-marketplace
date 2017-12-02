@@ -45,7 +45,7 @@ class ListingsScreen extends React.Component {
         this._getListings();
       });
     }).catch((error) => {
-      // TODO (jonmchu): handle error
+      window.showBanner('error', 'Something went wrong');
     });
     window.EventBus.on(Events.claimCancelled, this._addListing);
     window.EventBus.on(Events.regionUpdated, this._updateRegion);
@@ -71,6 +71,7 @@ class ListingsScreen extends React.Component {
           isLoading: false,
         });
       }).catch((error) => {
+        window.showBanner('error', error.message);
         this.setState({
           isRefreshing: false,
           isLoading: false,
@@ -88,6 +89,11 @@ class ListingsScreen extends React.Component {
         'Uh oh!',
         'Please turn on Location Services to allow Replate to determine your location and listings nearby.',
         )
+
+        this.setState({
+          isRefreshing: false,
+          isLoading: false,
+        });
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );

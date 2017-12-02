@@ -72,6 +72,7 @@ class EditProfileScreen  extends React.Component {
   _updateProfile = () => {
     success = (user) => {
       window.EventBus.trigger(Events.userUpdated, user);
+      window.showBanner('success', 'Updated profile');
       this.props.onUserUpdate(user);
       this.setState({
         isUpdating: false,
@@ -83,6 +84,7 @@ class EditProfileScreen  extends React.Component {
     };
 
     failure = (error) => {
+      window.showBanner('error', error.message);
       this.setState({
         isUpdating: false,
       });

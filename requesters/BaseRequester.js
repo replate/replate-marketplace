@@ -43,7 +43,11 @@ class BaseRequester {
       if (response.status >= 200 && response.status < 300) {
         return json;
       } else {
-        throw json;
+        error_json = json.error;
+        if (error_json === undefined || error_json.message === undefined) {
+          throw new Error("Something went wrong");
+        }
+        throw new Error(error_json.message);
       }
     });
   }
