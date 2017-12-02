@@ -11,6 +11,10 @@ class Events {
   static get userUpdated() {
     return 'userUpdated';
   }
+
+  static get regionUpdated() {
+    return 'regionUpdated';
+  }
 }
 
 export default Events;

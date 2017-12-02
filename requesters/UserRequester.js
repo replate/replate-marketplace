@@ -33,8 +33,22 @@ class UserRequester extends BaseRequester {
     } catch (error) {
       return Promise.reject(error);
     }
+  }
 
-    return BaseRequester.patch(APIConstants.users.user(user.id), params);
+  static async updateRegion(user_id, region) {
+    params = {
+      marketplace_user: {
+        marketplace_region_id: region.id,
+      }
+    }
+
+    try {
+      user = await BaseRequester.patch(APIConstants.users.user(user_id), params);
+      LocalStorage.storeUser(user);
+      return Promise.resolve(user);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   static updatePassword(user_id, current_password, new_password, new_password_confirmation) {

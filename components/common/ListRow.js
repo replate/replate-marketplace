@@ -31,8 +31,8 @@ class ListRow extends React.Component {
             {this.props.children}
           </View>
           { (this.props.showCaret) ?
-            <Icon 
-              name={'keyboard-arrow-right'} 
+            <Icon
+              name={'keyboard-arrow-right'}
               size={UIConstants.iconSizes.label}
               color={Colors.alphaColor(Colors.darkGray, 0.4)}
               style={styles.caret}

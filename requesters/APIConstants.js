@@ -26,6 +26,12 @@ class APIConstants {
     }
   }
 
+  static get regions() {
+    return {
+      all: this.BASE_URL + '/marketplace_regions',
+    }
+  }
+
   static get profile() {
     return {
       user: (user_id) => this.BASE_URL + `/marketplace_users/${user_id}`

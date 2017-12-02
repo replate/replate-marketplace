@@ -48,10 +48,12 @@ class ListingsScreen extends React.Component {
       // TODO (jonmchu): handle error
     });
     window.EventBus.on(Events.claimCancelled, this._addListing);
+    window.EventBus.on(Events.regionUpdated, this._updateRegion);
   }
 
   componentWillDismount() {
     window.EventBus.off(Events.claimCancelled, this._addListing);
+    window.EventBus.off(Events.regionUpdated, this._updateRegion);
   }
 
   _sortListings = (lat, lng) => {
@@ -111,6 +113,16 @@ class ListingsScreen extends React.Component {
     newListings = allListings.filter((l) => l.id !== listing.id);
     this.setState({
       listings: newListings,
+    });
+  }
+
+  _updateRegion = (region) => {
+    this.setState({
+      region: region,
+      isLoading: true,
+    }, () => {
+      this.props.navigation.setParams({ title: this.state.region.region + " Marketplace" });
+      this._getListings();
     });
   }
 

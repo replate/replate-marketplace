@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SettingsScreen from './SettingsScreen';
 import EditProfileScreen from './EditProfileScreen';
+import EditRegionScreen from './EditRegionScreen';
 import ResetPasswordScreen from './ResetPasswordScreen';
 
 import Colors from '../../constants/Colors';
@@ -35,6 +36,11 @@ const SettingsDetailPages = {
   EditProfile: {
     screen: NavigationHelper.paramsToProps(EditProfileScreen),
   },
+
+  EditRegion: {
+    screen: NavigationHelper.paramsToProps(EditRegionScreen),
+  },
+
   ResetPassword: {
     screen: NavigationHelper.paramsToProps(ResetPasswordScreen),
   }

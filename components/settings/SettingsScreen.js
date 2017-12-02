@@ -74,6 +74,12 @@ class SettingsScreen extends React.Component {
           onUserUpdate: this._updateUser,
         });
         break;
+      case REGION:
+        this.props.navigation.navigate('EditRegion', {
+          user: this.state.user,
+          onUserUpdate: this._updateUser,
+        });
+        break;
       case PASSWORD:
         this.props.navigation.navigate('ResetPassword', {
           user: this.state.user,
