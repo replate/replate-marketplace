@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   BackHandler,
   Image,
   Keyboard,
@@ -58,7 +59,8 @@ class LoginScreen extends React.Component {
       }
     };
 
-    failure = (error) => {
+    failure = (json) => {
+      Alert.alert(json.error.message);
       this.setState({
         isLoading: false,
       });

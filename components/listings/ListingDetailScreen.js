@@ -26,6 +26,7 @@ import ComponentStyles from '../../constants/ComponentStyles';
 import UIConstants from '../../constants/UIConstants';
 import Events from '../../constants/Events';
 import ModelConstants from '../../constants/ModelConstants';
+import LocalStorage from '../../helpers/LocalStorage';
 
 class ListingDetailScreen extends React.Component {
 
@@ -57,7 +58,17 @@ class ListingDetailScreen extends React.Component {
     ListingsRequester.claimListing(this.props.listing).then((listing) => {
       window.EventBus.trigger(Events.listingClaimed, listing);
       this.props.onClaim(listing);
-      this.props.navigation.goBack();
+      LocalStorage.userHasClaimed().then(() => {
+        // TODO: banner popup
+        this.props.navigation.goBack();
+      }).catch((error) => {
+        Alert.alert(
+          'Launch Onfleet',
+          'Please launch the Onfleet driver app to complete your pickup.',
+          [{text: 'Close', onPress: () => this.props.navigation.goBack()}]
+        )
+        LocalStorage.storeUserHasClaimed(true);
+      });
     }).catch((error) => {
       this.setState({isClaiming: false});
     });

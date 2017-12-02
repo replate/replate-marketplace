@@ -39,12 +39,13 @@ class BaseRequester {
   }
 
   static _checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-      return response.json();
-    } else {
-      let error = new Error(response.statusText);
-      throw error;
-    }
+    return response.json().then((json) => {
+      if (response.status >= 200 && response.status < 300) {
+        return json;
+      } else {
+        throw json;
+      }
+    });
   }
 
   static async _getHeaders(callback) {
