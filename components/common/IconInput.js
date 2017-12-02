@@ -30,7 +30,7 @@ class IconInput extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container, this.props.style]}>
+      <View style={[styles.container, this.props.containerStyle]}>
         <Icon
           name={this.props.iconName}
           size={UIConstants.iconSizes.label}
@@ -38,8 +38,8 @@ class IconInput extends React.Component {
         />
         <TextInput
           {...this.props}
-          style={[this.props.style, styles.textInput, {color: this.props.textColor}]}
-          placholderTextColor={Colors.alphaColor(this.props.textColor, 0.70)}
+          style={[styles.textInput, {color: this.props.textColor}, this.props.style]}
+          placeholderTextColor={Colors.alphaColor(this.props.textColor, 0.70)}
           underlineColorAndroid='transparent'
         />
       </View>
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
 
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   textInput: {

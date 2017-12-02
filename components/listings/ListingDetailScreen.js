@@ -56,6 +56,7 @@ class ListingDetailScreen extends React.Component {
   _claim = () => {
     this.setState({isClaiming: true});
     ListingsRequester.claimListing(this.props.listing).then((listing) => {
+      listing.distance = this.props.listing.distance;
       window.EventBus.trigger(Events.listingClaimed, listing);
       this.props.onClaim(listing);
       LocalStorage.userHasClaimed().then(() => {
@@ -78,6 +79,7 @@ class ListingDetailScreen extends React.Component {
   _cancel = () => {
     this.setState({isClaiming: true});
     ListingsRequester.cancelClaim(this.props.listing).then((listing) => {
+      listing.distance = this.props.listing.distance;
       window.EventBus.trigger(Events.claimCancelled, listing);
       window.showBanner('success', 'Cancelled');
       this.props.onCancel(listing);

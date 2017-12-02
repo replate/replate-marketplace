@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 
+import IconInput from '../common/IconInput';
 import LoadingButton from '../common/LoadingButton';
 
 import {
@@ -84,19 +85,23 @@ class LoginScreen extends React.Component {
             <View style={styles.contentWrapper}>
               <Image style={styles.logo} source={require('../../assets/logo-white.png')} />
               <View><Text style={styles.title}>Replate Marketplace</Text></View>
-              <TextInput
-                style={styles.input}
+              <IconInput
+                iconName={'person'}
+                iconColor={Colors.white}
+                textColor={Colors.white}
+                containerStyle={styles.inputContainer}
+                style={styles.inputText}
                 placeholder='Email'
-                placeholderTextColor={Colors.alphaColor(Colors.white, 0.70)}
                 onChangeText={(text) => this.setState({email: text})}
-                underlineColorAndroid='transparent'
               />
-              <TextInput
-                style={[styles.input, {marginBottom: 15}]}
+              <IconInput
+                iconName={'lock'}
+                iconColor={Colors.white}
+                textColor={Colors.white}
+                containerStyle={[styles.inputContainer, {marginBottom: 25}]}
+                style={styles.inputText}
                 placeholder='Password'
-                placeholderTextColor={Colors.alphaColor(Colors.white, 0.70)}
                 onChangeText={(text) => this.setState({password: text})}
-                underlineColorAndroid='transparent'
                 secureTextEntry
               />
               <LoadingButton
@@ -141,14 +146,16 @@ const styles = StyleSheet.create({
     marginBottom: UIConstants.margins.standard,
   },
 
-  input: {
+  inputContainer: {
     width: 280,
     marginBottom: UIConstants.margins.standard,
-    color: Colors.white,
     padding: UIConstants.margins.standard,
-    paddingBottom: UIConstants.margins.tight,
     borderBottomColor: Colors.alphaColor(Colors.white, 0.5),
     borderBottomWidth: 1,
+  },
+
+  inputText: {
+    fontSize: UIConstants.fontSizes.title,
   },
 
   buttonContainer: {

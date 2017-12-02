@@ -16,7 +16,7 @@ import Events from '../../constants/Events';
 
 import LocalStorage from '../../helpers/LocalStorage';
 
-import DistanceUtils from '../../helpers/DistanceUtils.js';
+import DistanceUtils from '../../helpers/DistanceUtils';
 
 class ListingsScreen extends React.Component {
 
@@ -107,7 +107,7 @@ class ListingsScreen extends React.Component {
 
   _addListing = (listing) => {
     allListings = this.state.listings;
-    addListing = allListings.slice()
+    addListing = allListings.slice();
     addListing.push(listing);
     this.setState({
       listings: addListing,

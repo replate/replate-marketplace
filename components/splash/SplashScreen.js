@@ -22,8 +22,13 @@ class SplashScreen extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       LocalStorage.getUser().then((user) => {
-        this.props.navigation.navigate('Main');
+        if (user.has_reset_password) {
+          this.props.navigation.navigate('Main');
+        } else {
+          this.props.navigation.navigate('ResetPassword', {user: user});
+        }
       }).catch((error) => {
+        // TODO: handle error
         this.props.navigation.navigate('Login');
       });
     }, 3000);

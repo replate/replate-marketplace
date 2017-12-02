@@ -15,6 +15,8 @@ import Events from '../../constants/Events';
 
 import ListingsScreen from '../listings/ListingsScreen';
 
+import DistanceUtils from '../../helpers/DistanceUtils';
+
 class ActivePickupsScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
@@ -25,7 +27,6 @@ class ActivePickupsScreen extends React.Component {
     super(props);
 
     this.state = {
-      region: {id: 1}, // TODO: make dependent on user region
       listings: [],
       isLoading: true,
       isRefreshing: false,
@@ -41,20 +42,47 @@ class ActivePickupsScreen extends React.Component {
     window.EventBus.off(Events.listingClaimed, this._addListing);
   }
 
-  _getActiveListings = () => {
+  _sortListings = (lat, lng) => {
     ListingsRequester.getActiveListings().then((listings) =>  {
-      this.setState({
-        listings: listings,
-        isRefreshing: false,
-        isLoading: false,
+      let sortedListings = listings.map((listing) => {
+        listing.distance = DistanceUtils.getDistanceFromLatLonInMiles(lat, lng, listing.lat, listing.lng);
+        return listing;
       });
-    }).catch((error) => {
-      this.setState({
-        isRefreshing: false,
-        isLoading: false,
+      sortedListings.sort((listing1, listing2) => {
+        return listing1.distance - listing2.distance;
       });
+      this.setState({
+          listings: sortedListings,
+          isRefreshing: false,
+          isLoading: false,
+        });
+      }).catch((error) => {
+        window.showBanner('error', error.message);
+        this.setState({
+          isRefreshing: false,
+          isLoading: false,
+        });
     });
+  }
 
+  _getActiveListings = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this._sortListings(position.coords.latitude, position.coords.longitude);
+      },
+      (error) => {
+        Alert.alert(
+        'Uh oh!',
+        'Please turn on Location Services to allow Replate to determine your location and listings nearby.',
+        )
+
+        this.setState({
+          isRefreshing: false,
+          isLoading: false,
+        });
+      },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   _refresh = () => {
@@ -65,7 +93,7 @@ class ActivePickupsScreen extends React.Component {
 
   _addListing = (listing) => {
     allListings = this.state.listings;
-    addListing = allListings.slice()
+    addListing = allListings.slice();
     addListing.push(listing);
     this.setState({
       listings: addListing,

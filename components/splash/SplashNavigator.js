@@ -4,16 +4,24 @@ import {
 
 import SplashScreen from './SplashScreen';
 import LoginNavigator from '../login/LoginNavigator';
+import ResetPasswordScreen from '../login/ResetPasswordScreen';
 import MainNavigator from '../MainNavigator';
 
+import NavigationHelper from '../../helpers/NavigationHelper';
 
-const SplashNavigator = StackNavigator({  
+
+const SplashNavigator = StackNavigator({
   Splash: {
     screen: SplashScreen
   },
   Login: {
     screen: LoginNavigator
   },
+
+  ResetPassword: {
+    screen: NavigationHelper.paramsToProps(ResetPasswordScreen)
+  },
+
   Main: {
     screen: MainNavigator
   }
