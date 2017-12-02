@@ -35,6 +35,8 @@ class ListingItem extends React.Component {
     let tag = null;
     if (this.props.active) {
       tag = <Tag text="Active" color={Colors.blue}/>
+    } else {
+      tag = <Tag text={`${this.props.listing.distance.toFixed(1)} mi`} color={Colors.darkGray}/>
     }
     return (
       <TouchableHighlight

@@ -2,7 +2,8 @@ import React from 'react';
 import {
   FlatList,
   StyleSheet,
-  View
+  View,
+  Alert
 } from 'react-native';
 
 import LoadingView from '../common/LoadingView';
@@ -13,7 +14,9 @@ import ListingsRequester from '../../requesters/ListingsRequester';
 
 import Events from '../../constants/Events';
 
-import LocalStorage from '../../helpers/LocalStorage'
+import LocalStorage from '../../helpers/LocalStorage';
+
+import DistanceUtils from '../../helpers/DistanceUtils.js';
 
 class ListingsScreen extends React.Component {
 
@@ -51,20 +54,41 @@ class ListingsScreen extends React.Component {
     window.EventBus.off(Events.claimCancelled, this._addListing);
   }
 
-  _getListings = () => {
+  _sortListings = (lat, lng) => {
     ListingsRequester.getListings(this.state.region).then((listings) =>  {
-      this.setState({
-        listings: listings,
-        isRefreshing: false,
-        isLoading: false,
+      let sortedListings = listings.map((listing) => {
+        listing.distance = DistanceUtils.getDistanceFromLatLonInMiles(lat, lng, listing.lat, listing.lng);
+        return listing;
       });
-    }).catch((error) => {
-      this.setState({
-        isRefreshing: false,
-        isLoading: false,
+      sortedListings.sort((listing1, listing2) => {
+        return listing1.distance - listing2.distance;
       });
+      this.setState({
+          listings: sortedListings,
+          isRefreshing: false,
+          isLoading: false,
+        });
+      }).catch((error) => {
+        this.setState({
+          isRefreshing: false,
+          isLoading: false,
+        });
     });
+  }
 
+  _getListings = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this._sortListings(position.coords.latitude, position.coords.longitude);
+      },
+      (error) => {
+        Alert.alert(
+        'Uh oh!',
+        'Please turn on Location Services to allow Replate to determine your location and listings nearby.',
+        )
+      },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   _refresh = () => {
