@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SettingsScreen from './SettingsScreen';
 import EditProfileScreen from './EditProfileScreen';
+import ResetPasswordScreen from './ResetPasswordScreen';
 
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
@@ -33,6 +34,9 @@ let menuIcon = (navigation) => {
 const SettingsDetailPages = {
   EditProfile: {
     screen: NavigationHelper.paramsToProps(EditProfileScreen),
+  },
+  ResetPassword: {
+    screen: NavigationHelper.paramsToProps(ResetPasswordScreen),
   }
 }
 

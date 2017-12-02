@@ -36,6 +36,18 @@ class UserRequester extends BaseRequester {
 
     return BaseRequester.patch(APIConstants.users.user(user.id), params);
   }
+
+  static updatePassword(user_id, current_password, new_password, new_password_confirmation) {
+    params = {
+      marketplace_user: {
+        current_password: current_password,
+        password: new_password,
+        password_confirmation: new_password_confirmation,
+      }
+    }
+
+    return BaseRequester.patch(APIConstants.login.changePassword(user_id), params);
+  }
 }
 
 export default UserRequester;

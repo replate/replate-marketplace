@@ -74,6 +74,11 @@ class SettingsScreen extends React.Component {
           onUserUpdate: this._updateUser,
         });
         break;
+      case PASSWORD:
+        this.props.navigation.navigate('ResetPassword', {
+          user: this.state.user,
+        });
+        break;
       case LOGOUT:
         Alert.alert(
           'Logout',

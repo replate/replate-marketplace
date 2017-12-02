@@ -51,7 +51,6 @@ class LoginScreen extends React.Component {
 
   _attemptLogin = () => {
     success = (user) => {
-      LocalStorage.storeUser(user);
       if (user.has_reset_password) {
         this.props.navigation.navigate('Main');
       } else {

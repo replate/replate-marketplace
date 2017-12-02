@@ -30,7 +30,7 @@ let doneIcon = (navigation) => {
       title='Done'
       containerStyle={ComponentStyles.navButtonContainer}
       style={ComponentStyles.navButtonText}
-      onPress={params.updateProfile}
+      onPress={params.resetPassword}
       isLoading={params.isUpdating}
     />
   )
@@ -40,39 +40,34 @@ let doneIcon = (navigation) => {
 class EditProfileScreen  extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Edit Profile',
+    title: 'Reset Password',
     headerRight: doneIcon(navigation)
   })
 
   static propTypes = {
     user: PropTypes.object,
-    onUserUpdate: PropTypes.func,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.user.id,
-      first_name: this.props.user.first_name,
-      last_name: this.props.user.last_name,
-      company_name: this.props.user.company_name,
-      email: this.props.user.email,
-      phone: this.props.user.phone,
+      user_id: this.props.user.id,
+      current_password: '',
+      new_password: '',
+      confirm_password: '',
       isUpdating: false,
     };
   }
 
   componentWillMount() {
     this.props.navigation.setParams({
-      updateProfile: this._updateProfile,
+      resetPassword: this._resetPassword,
       isUpdating: false,
     });
   }
 
-  _updateProfile = () => {
-    success = (user) => {
-      window.EventBus.trigger(Events.userUpdated, user);
-      this.props.onUserUpdate(user);
+  _resetPassword = () => {
+    success = () => {
       this.setState({
         isUpdating: false,
       });
@@ -98,8 +93,12 @@ class EditProfileScreen  extends React.Component {
       isUpdating: true,
     });
 
-    updatedUser = this.state;
-    UserRequester.updateUser(updatedUser).then(success).catch(failure);
+    UserRequester.updatePassword(
+      this.state.user_id,
+      this.state.current_password,
+      this.state.new_password,
+      this.state.confirm_password
+    ).then(success).catch(failure);
   }
 
   render() {
@@ -115,52 +114,35 @@ class EditProfileScreen  extends React.Component {
           <ScrollView style={styles.scroll}>
             <ListRow>
               <IconInput
-                iconName={'person'}
+                iconName={'lock-outline'}
                 defaultValue={this.state.first_name}
-                placeholder={'First Name'}
-                onChangeText={(text) => this.setState({first_name: text})}
+                placeholder={'Current Password'}
+                onChangeText={(text) => this.setState({current_password: text})}
                 editable={!this.state.isUpdating}
+                secureTextEntry
               />
             </ListRow>
-            <Border style={styles.nameBorder} />
+            <Border />
             <ListRow>
               <IconInput
-                iconName={'person'}
-                iconColor={Colors.white}
+                iconName={'lock'}
                 defaultValue={this.state.last_name}
-                placeholder={'Last Name'}
-                onChangeText={(text) => this.setState({last_name: text})}
+                placeholder={'New Password'}
+                onChangeText={(text) => this.setState({new_password: text})}
                 editable={!this.state.isUpdating}
+                secureTextEntry
               />
             </ListRow>
-            <Border/>
+            <Border style={styles.marginBorder} />
             <ListRow>
               <IconInput
-                iconName={'business'}
+                iconName={'lock'}
+                iconColor={Colors.white}
                 defaultValue={this.state.company_name}
-                placeholder={'Company Name'}
-                onChangeText={(text) => this.setState({company_name: text})}
+                placeholder={'Confirm Password'}
+                onChangeText={(text) => this.setState({confirm_password: text})}
                 editable={!this.state.isUpdating}
-              />
-            </ListRow>
-            <Border/>
-            <ListRow>
-              <IconInput
-                iconName={'email'}
-                defaultValue={this.state.email}
-                placeholder={'Email'}
-                onChangeText={(text) => this.setState({email: text})}
-                editable={!this.state.isUpdating}
-              />
-            </ListRow>
-            <Border/>
-            <ListRow>
-              <IconInput
-                iconName={'phone'}
-                defaultValue={this.state.phone}
-                placeholder={'Phone'}
-                onChangeText={(text) => this.setState({phone: text})}
-                editable={!this.state.isUpdating}
+                secureTextEntry
               />
             </ListRow>
             <Border />
@@ -180,7 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  nameBorder: {
+  marginBorder: {
     marginLeft: 2 * UIConstants.margins.side + UIConstants.iconSizes.label,
   }
 })
