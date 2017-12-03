@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
 
   bannerWrapper: {
     position: 'absolute',
-    padding: UIConstants.margins.standard,
-    marginTop: Header.HEIGHT,
+    padding: 10,
+    marginTop: (Platform.OS === 'android') ? StatusBar.currentHeight + Header.HEIGHT : Header.HEIGHT,
     maxWidth: '100%',
   },
 });

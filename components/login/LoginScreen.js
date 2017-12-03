@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: 280,
     marginBottom: UIConstants.margins.standard,
-    padding: UIConstants.margins.standard,
+    padding: 10,
     borderBottomColor: Colors.alphaColor(Colors.white, 0.5),
     borderBottomWidth: 1,
   },
