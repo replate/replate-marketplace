@@ -3,11 +3,8 @@ import { Platform } from 'react-native';
 class APIConstants {
 
   static get BASE_URL() {
-    host = '10.0.3.2';
-    if (Platform.OS === 'ios') {
-      host = 'localhost';
-    }
-    return 'http://' + host + ':3000/api/marketplace';
+    host = 'replate-testing.herokuapp.com'
+    return 'https://' + host + '/api/marketplace';
   }
 
   static get login() {
