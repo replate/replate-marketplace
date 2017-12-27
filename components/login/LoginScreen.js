@@ -84,7 +84,7 @@ class LoginScreen extends React.Component {
           >
             <View style={styles.contentWrapper}>
               <Image style={styles.logo} source={require('../../assets/logo-white.png')} />
-              <View><Text style={styles.title}>Replate Marketplace</Text></View>
+              <View><Text style={styles.title}>Replate</Text></View>
               <IconInput
                 iconName={'person'}
                 iconColor={Colors.white}

@@ -1,7 +1,7 @@
 class Colors {
 
   static get main() {
-    return '#24b47e';
+    return '#2bb081';
   }
 
   static get white() {
