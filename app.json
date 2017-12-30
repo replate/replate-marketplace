@@ -1,5 +1,15 @@
 {
-  "expo": {
-    "sdkVersion": "21.0.0"
-  }
+	"expo": {
+  	"name": "Replate",
+  	"icon": "./assets/app-icon.png",
+  	"version": "1.0.0",
+  	"slug": "replate",
+  	"sdkVersion": "21.0.0",
+  	"ios": {
+  	  "bundleIdentifier": "org.replate.mobile"
+  	},
+  	"android": {
+  	  "package": "org.replate.mobile"
+  	}
+	}
 }
