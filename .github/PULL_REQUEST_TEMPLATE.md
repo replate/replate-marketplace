@@ -4,9 +4,6 @@ A few sentences describing the overall goals of the pull request's commits.
 ### Status
 READY/IN DEVELOPMENT/HOLD
 
-### Migrations
-YES | NO
-
 ### Related PRs
 List related PRs against other branches:
 
@@ -14,7 +11,6 @@ List related PRs against other branches:
 
 ### Todos
 - [ ] Testing
-- [ ] Documentation/`annotate`
 
 ### Screenshots
 [insert image(s) here]
