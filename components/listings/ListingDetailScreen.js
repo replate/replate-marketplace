@@ -121,6 +121,18 @@ class ListingDetailScreen extends React.Component {
         isLoading={this.state.isClaiming}
         title="Cancel" />)
     }
+
+    let servings = null;
+    if (this.props.listing.num_meals) {
+      const mealsGrammar = this.props.listing.num_meals > 1 ? "meals" : "meal";
+      caption = (`Serves ${this.props.listing.num_meals} ${mealsGrammar}`);
+      servings = (
+        <IconLabel
+          iconName='people'
+          text={caption}
+          style={styles.label}/>)
+    } 
+
     return (
       <View style={styles.container}>
         <View style={
@@ -148,11 +160,7 @@ class ListingDetailScreen extends React.Component {
             text={this.props.listing.details}
             style={styles.label}
           />
-          <IconLabel
-            iconName='people'
-            text={'Serves ' +  this.props.listing.num_meals + ' meals'}
-            style={styles.label}
-          />
+          {servings}
           <IconLabel
             iconName='pin-drop'
             text={this.props.listing.full_address}
