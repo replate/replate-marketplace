@@ -56,8 +56,8 @@ class EditProfileScreen  extends React.Component {
       first_name: this.props.user.first_name,
       last_name: this.props.user.last_name,
       company_name: this.props.user.company_name,
+      onfleet_driver_id: this.props.user.onfleet_driver_id,
       email: this.props.user.email,
-      phone: this.props.user.phone,
       isUpdating: false,
     };
   }
@@ -156,16 +156,6 @@ class EditProfileScreen  extends React.Component {
               />
             </ListRow>
             <Border/>
-            <ListRow>
-              <IconInput
-                iconName={'phone'}
-                defaultValue={this.state.phone}
-                placeholder={'Phone'}
-                onChangeText={(text) => this.setState({phone: text})}
-                editable={!this.state.isUpdating}
-              />
-            </ListRow>
-            <Border />
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>

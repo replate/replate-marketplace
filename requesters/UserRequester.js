@@ -22,7 +22,10 @@ class UserRequester extends BaseRequester {
         last_name: user.last_name,
         company_name: user.company_name,
         email: user.email,
-        phone: user.phone,
+      },
+      onfleet_driver_id: user.onfleet_driver_id,
+      onfleet_user: {
+        name: user.company_name,
       }
     }
 
