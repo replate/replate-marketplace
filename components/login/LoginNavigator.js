@@ -6,6 +6,8 @@ import {
 import LoginScreen from './LoginScreen';
 import MainNavigator from '../MainNavigator';
 import ResetPasswordScreen from './ResetPasswordScreen'
+import ForgotPasswordScreen from './ForgotPasswordScreen'
+
 
 import NavigationHelper from '../../helpers/NavigationHelper'
 
@@ -16,6 +18,9 @@ const LoginNavigator = StackNavigator({
   },
   ResetPassword: {
     screen: NavigationHelper.paramsToProps(ResetPasswordScreen)
+  },
+  ForgotPassword: {
+    screen: ForgotPasswordScreen
   },
   Main: {
     screen: MainNavigator

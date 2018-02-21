@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Alert,
   BackHandler,
   Image,
   Keyboard,
@@ -13,12 +12,13 @@ import {
   View,
 } from 'react-native';
 
-import IconInput from '../common/IconInput';
 import LoadingButton from '../common/LoadingButton';
 
 import {
   StackRouter
 } from 'react-navigation';
+
+import IconInput from '../common/IconInput';
 
 import UIConstants from '../../constants/UIConstants'
 import ComponentStyles from '../../constants/ComponentStyles'
@@ -26,19 +26,17 @@ import Colors from '../../constants/Colors'
 import LoginRequester from '../../requesters/LoginRequester'
 import LocalStorage from '../../helpers/LocalStorage'
 
-class LoginScreen extends React.Component {
+class ForgotPasswordScreen extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       email: 'd@d.com',
-      password: 'LQLwPwm1',
       isLoading: false,
     }
   }
 
   componentDidMount() {
-    LocalStorage.clearUser();
     BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
   }
 
@@ -50,7 +48,12 @@ class LoginScreen extends React.Component {
     return true;
   }
 
-  _attemptLogin = () => {
+  _cancelReset = () => {
+    this.props.navigation.navigate('Login');
+  }
+
+  _confirmEmail = () => {
+    /* TODO: change to sending an email */
     success = (user) => {
       if (user.has_reset_password) {
         window.showBanner('success', 'Welcome!');
@@ -74,10 +77,6 @@ class LoginScreen extends React.Component {
     LoginRequester.signIn(this.state.email, this.state.password).then(success).catch(failure);
   }
 
-  _forgotPassword = () => {
-    this.props.navigation.navigate('ForgotPassword')
-  }
-
   render() {
     return (
       <View>
@@ -87,38 +86,34 @@ class LoginScreen extends React.Component {
             onPress={Keyboard.dismiss}
           >
             <View style={styles.contentWrapper}>
+              /* TODO: change style */
               <Image style={styles.logo} source={require('../../assets/logo-white.png')} />
-              <View><Text style={styles.title}>Replate</Text></View>
+              <View><Text
+                style={styles.subtitle}
+                >
+                Please enter the email address
+                associated with your Replate account.
+              </Text></View>
               <IconInput
                 iconName={'person'}
                 iconColor={Colors.white}
                 textColor={Colors.white}
                 containerStyle={styles.inputContainer}
                 style={styles.inputText}
-                placeholder='Email'
+                placeholder='Enter Email'
                 onChangeText={(text) => this.setState({email: text})}
               />
-              <IconInput
-                iconName={'lock'}
-                iconColor={Colors.white}
-                textColor={Colors.white}
-                containerStyle={[styles.inputContainer, {marginBottom: 25}]}
-                style={styles.inputText}
-                placeholder='Password'
-                onChangeText={(text) => this.setState({password: text})}
-                secureTextEntry
-              />
-              <LoadingButton
-                containerStyle={[ComponentStyles.buttonContainer, styles.buttonContainer]}
-                style={[ComponentStyles.buttonText, styles.buttonText]}
-                onPress={this._attemptLogin}
-                isLoading={this.state.isLoading}
-                title="Log In" />
-              <Text
-                style={styles.linkText}
-                onPress={this._forgotPassword}>
-                Forgot your password?
-              </Text>
+            <LoadingButton
+              containerStyle={[ComponentStyles.buttonContainer, styles.updateButtonContainer]}
+              style={[ComponentStyles.buttonText, styles.buttonText]}
+              onPress={this._cancelReset}
+              title="Cancel" />
+            <LoadingButton
+              containerStyle={[ComponentStyles.buttonContainer, styles.updateButtonContainer]}
+              style={[ComponentStyles.buttonText, styles.buttonText]}
+              onPress={this._confirmEmail}
+              isLoading={this.state.isLoading}
+              title="Confirm Email" />
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -135,6 +130,21 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
+  keyboardAvoiding: {
+    flex: 1,
+  },
+
+  headerWrapper: {
+    left: 0,
+    right: 0,
+    top: 0,
+    margin: UIConstants.margins.large,
+    marginTop: 50,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   contentWrapper: {
     flex: 1,
     flexDirection: 'column',
@@ -143,16 +153,24 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 75,
-    height: 75,
-    marginBottom: UIConstants.margins.standard,
+    width: 40,
+    height: 40,
+    marginBottom: 14,
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: UIConstants.fontWeights.thin,
+    fontSize: UIConstants.fontSizes.largeTitle,
+    fontWeight: UIConstants.fontWeights.bold,
     color: Colors.white,
-    marginBottom: UIConstants.margins.standard,
+    textAlign: 'center',
+  },
+
+  subtitle: {
+    fontSize: UIConstants.fontSizes.title,
+    fontWeight: UIConstants.fontWeights.normal,
+    color: Colors.white,
+    textAlign: 'center',
+    marginBottom: 50,
   },
 
   inputContainer: {
@@ -167,20 +185,23 @@ const styles = StyleSheet.create({
     fontSize: UIConstants.fontSizes.title,
   },
 
-  buttonContainer: {
+  updateButtonContainer: {
     width: 280,
     backgroundColor: Colors.alphaColor(Colors.white, 0.3),
+    marginBottom: UIConstants.margins.standard,
+  },
+
+  logoutButtonContainer: {
+    width: 280,
+    // Offset the amount the header pushes down the content...
+    // needed for the KeyboardAvoidingView to function in
+    // a simple way
+    marginBottom: 120,
   },
 
   buttonText: {
     color: Colors.white,
-  },
-
-  linkText: {
-    fontSize: UIConstants.fontSizes.normal,
-    color: Colors.white,
-    marginTop: UIConstants.margins.standard,
   }
 });
 
-export default LoginScreen;
+export default ForgotPasswordScreen;
