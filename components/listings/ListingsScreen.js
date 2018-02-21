@@ -3,7 +3,8 @@ import {
   FlatList,
   StyleSheet,
   View,
-  Alert
+  Alert,
+  Text
 } from 'react-native';
 
 import LoadingView from '../common/LoadingView';
@@ -13,9 +14,9 @@ import ListingItem from './ListingItem';
 import ListingsRequester from '../../requesters/ListingsRequester';
 
 import Events from '../../constants/Events';
+import UIConstants from '../../constants/UIConstants';
 
 import LocalStorage from '../../helpers/LocalStorage';
-
 import DistanceUtils from '../../helpers/DistanceUtils';
 
 class ListingsScreen extends React.Component {
@@ -154,6 +155,16 @@ class ListingsScreen extends React.Component {
                 onPressItem={this._onPressItem}
               />
             }
+            ListEmptyComponent={
+              <View style={styles.noListingsView}>
+                <Text style={styles.text}>
+                  This is where available pickups are listed, but it seems like there currently are none!
+                </Text>
+                <Text style={styles.subText}>
+                  Contact your administrator for listings or pull down to refresh.
+                </Text>
+              </View>
+            }
             refreshing={this.state.isRefreshing}
             onRefresh={this._refresh}
           />
@@ -165,6 +176,25 @@ class ListingsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  text: {
+    fontSize: UIConstants.fontSizes.normal,
+    fontWeight: UIConstants.fontWeights.normal,
+    width: '100%', 
+    textAlign: 'center',
+    marginBottom: UIConstants.margins.standard,
+  },
+
+  subText: {
+    fontSize: UIConstants.fontSizes.meta,
+    fontWeight: UIConstants.fontWeights.thin,
+    width: '100%', 
+    textAlign: 'center',
+  },
+
+  noListingsView: {
+    margin: UIConstants.margins.large,
   },
 })
 
