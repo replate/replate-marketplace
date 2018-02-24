@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   BackHandler,
   Image,
   Keyboard,
@@ -48,19 +49,13 @@ class ForgotPasswordScreen extends React.Component {
     return true;
   }
 
-  _cancelReset = () => {
-    this.props.navigation.navigate('Login');
-  }
-
   _confirmEmail = () => {
-    /* TODO: change to sending an email */
-    success = (user) => {
-      if (user.has_reset_password) {
-        window.showBanner('success', 'Welcome!');
-        this.props.navigation.navigate('Main');
-      } else {
-        this.props.navigation.navigate('ResetPassword', { user })
-      }
+    success = () => {
+      Alert.alert(
+        'Email Sent',
+        'Instructions to reset your password have been sent to your email.',
+        [{text: 'Close', onPress: () => this.props.navigation.goBack()},]
+      )
     };
 
     failure = (error) => {
@@ -74,7 +69,7 @@ class ForgotPasswordScreen extends React.Component {
       isLoading: true,
     });
 
-    LoginRequester.signIn(this.state.email, this.state.password).then(success).catch(failure);
+    LoginRequester.sendEmail(this.state.email).then(success).catch(failure);
   }
 
   render() {
@@ -86,12 +81,11 @@ class ForgotPasswordScreen extends React.Component {
             onPress={Keyboard.dismiss}
           >
             <View style={styles.contentWrapper}>
-              /* TODO: change style */
               <Image style={styles.logo} source={require('../../assets/logo-white.png')} />
               <View><Text
                 style={styles.subtitle}
-                >
-                Please enter the email address
+              >
+                Please enter the email address {"\n"}
                 associated with your Replate account.
               </Text></View>
               <IconInput
@@ -104,12 +98,12 @@ class ForgotPasswordScreen extends React.Component {
                 onChangeText={(text) => this.setState({email: text})}
               />
             <LoadingButton
-              containerStyle={[ComponentStyles.buttonContainer, styles.updateButtonContainer]}
+              containerStyle={[ComponentStyles.buttonContainer, styles.buttonContainer]}
               style={[ComponentStyles.buttonText, styles.buttonText]}
-              onPress={this._cancelReset}
+              onPress={() => this.props.navigation.goBack()}
               title="Cancel" />
             <LoadingButton
-              containerStyle={[ComponentStyles.buttonContainer, styles.updateButtonContainer]}
+              containerStyle={[ComponentStyles.buttonContainer, styles.buttonContainer]}
               style={[ComponentStyles.buttonText, styles.buttonText]}
               onPress={this._confirmEmail}
               isLoading={this.state.isLoading}
@@ -134,17 +128,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  headerWrapper: {
-    left: 0,
-    right: 0,
-    top: 0,
-    margin: UIConstants.margins.large,
-    marginTop: 50,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   contentWrapper: {
     flex: 1,
     flexDirection: 'column',
@@ -158,19 +141,12 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
 
-  title: {
-    fontSize: UIConstants.fontSizes.largeTitle,
-    fontWeight: UIConstants.fontWeights.bold,
-    color: Colors.white,
-    textAlign: 'center',
-  },
-
   subtitle: {
     fontSize: UIConstants.fontSizes.title,
     fontWeight: UIConstants.fontWeights.normal,
     color: Colors.white,
     textAlign: 'center',
-    marginBottom: 50,
+    marginBottom: 14,
   },
 
   inputContainer: {
@@ -185,18 +161,10 @@ const styles = StyleSheet.create({
     fontSize: UIConstants.fontSizes.title,
   },
 
-  updateButtonContainer: {
+  buttonContainer: {
     width: 280,
     backgroundColor: Colors.alphaColor(Colors.white, 0.3),
     marginBottom: UIConstants.margins.standard,
-  },
-
-  logoutButtonContainer: {
-    width: 280,
-    // Offset the amount the header pushes down the content...
-    // needed for the KeyboardAvoidingView to function in
-    // a simple way
-    marginBottom: 120,
   },
 
   buttonText: {

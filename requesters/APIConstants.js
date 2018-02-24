@@ -14,6 +14,7 @@ class APIConstants {
     return {
       signIn: this.BASE_URL + '/marketplace_users/sign_in',
       changePassword: (user_id) => this.BASE_URL + `/marketplace_users/${user_id}/update_password`,
+      forgotPassword: this.BASE_URL + '/marketplace_users/forgot_password',
     }
   }
 

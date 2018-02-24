@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     fontSize: UIConstants.fontSizes.normal,
     color: Colors.white,
     marginTop: UIConstants.margins.standard,
+    textDecorationLine: 'underline',
   }
 });
 
