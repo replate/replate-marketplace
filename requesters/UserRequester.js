@@ -25,7 +25,7 @@ class UserRequester extends BaseRequester {
       },
       onfleet_driver_id: user.onfleet_driver_id,
       onfleet_user: {
-        name: user.company_name,
+        name: `${user.first_name} ${user.last_name}`,
       }
     }
 
