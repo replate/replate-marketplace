@@ -49,7 +49,6 @@ class LoginRequester extends BaseRequester {
     }
 
     try {
-      {/* TODO: fix this to actually send email */}
       await BaseRequester.post(APIConstants.login.forgotPassword, params);
     } catch (error) {
       return Promise.reject(error);
