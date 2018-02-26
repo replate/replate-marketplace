@@ -14,6 +14,7 @@ import Tag from '../common/Tag';
 import ComponentStyles from '../../constants/ComponentStyles';
 import Colors from '../../constants/Colors';
 import UIConstants from '../../constants/UIConstants';
+import DateUtils from '../../helpers/DateUtils';
 
 class ListingItem extends React.Component {
 
@@ -38,6 +39,9 @@ class ListingItem extends React.Component {
     } else {
       tag = <Tag text={`${this.props.listing.distance.toFixed(1)} mi`} color={Colors.darkGray}/>
     }
+
+    let timeAvailable = DateUtils.getListingAvailability(this.props.listing.complete_before, this.props.listing.complete_after)
+
     return (
       <TouchableHighlight
         onPress= {this._onPress} >
@@ -50,6 +54,9 @@ class ListingItem extends React.Component {
           <View style={styles.textContainer}>
             <Text style={styles.title}>
               {this.props.listing.business_name}
+            </Text>
+            <Text style={styles.address}>
+              {timeAvailable} remaining
             </Text>
             <Text style={styles.address}>
               {this.props.listing.short_address}

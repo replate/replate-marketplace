@@ -27,6 +27,7 @@ import UIConstants from '../../constants/UIConstants';
 import Events from '../../constants/Events';
 import ModelConstants from '../../constants/ModelConstants';
 import LocalStorage from '../../helpers/LocalStorage';
+import DateUtils from '../../helpers/DateUtils';
 
 class ListingDetailScreen extends React.Component {
 
@@ -131,7 +132,11 @@ class ListingDetailScreen extends React.Component {
           iconName='people'
           text={caption}
           style={styles.label}/>)
-    } 
+    }
+
+    let dateAfter = DateUtils.getDateDetail(new Date(this.props.listing.complete_after));
+    let dateBefore = DateUtils.getDateDetail(new Date(this.props.listing.complete_before));
+    let listingTimes = `${dateAfter} to ${dateBefore}`;
 
     return (
       <View style={styles.container}>
@@ -161,6 +166,11 @@ class ListingDetailScreen extends React.Component {
             style={styles.label}
           />
           {servings}
+          <IconLabel
+            iconName='schedule'
+            text={listingTimes}
+            style={styles.label}
+          />
           <IconLabel
             iconName='pin-drop'
             text={this.props.listing.full_address}
