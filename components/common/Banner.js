@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ViewPropTypes,
+  TouchableOpacity,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -21,6 +22,7 @@ class Banner extends React.Component {
     style: ViewPropTypes.style,
     type: PropTypes.string,
     message: PropTypes.string,
+    onPress: PropTypes.func,
   }
 
   _typePicker = (success, error) => {
@@ -36,7 +38,11 @@ class Banner extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container, this.props.style]}>
+      <TouchableOpacity 
+        style={[styles.container, this.props.style]}
+        onPress={this.props.onPress}
+        activeOpacity={1}
+      >
         <View style={[
           styles.iconWrapper,
           {
@@ -50,7 +56,16 @@ class Banner extends React.Component {
           />
         </View>
         <Text style={styles.message}>{this.props.message}</Text>
-      </View>
+        <View style={[
+          styles.iconWrapper,
+        ]}>
+          <Icon
+            name='clear'
+            size={17}
+            color={Colors.darkGray}
+          />
+        </View>
+      </TouchableOpacity>
     );
   }
 }

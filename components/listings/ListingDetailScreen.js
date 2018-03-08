@@ -61,7 +61,10 @@ class ListingDetailScreen extends React.Component {
       window.EventBus.trigger(Events.listingClaimed, listing);
       this.props.onClaim(listing);
       LocalStorage.userHasClaimed().then(() => {
-        window.showBanner('success', 'Claimed!');
+        window.showBanner(
+          'success', 
+          'Claimed! Please launch the Onfleet driver app to complete your pickup.'
+        );
         this.props.navigation.goBack();
       }).catch((error) => {
         Alert.alert(

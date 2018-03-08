@@ -98,6 +98,7 @@ export default class App extends React.Component {
               style={styles.banner}
               type={this.state.bannerType}
               message={this.state.bannerMessage}
+              onPress={this._hideBanner}
             />
           </Animated.View>
           : null
