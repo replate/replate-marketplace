@@ -26,6 +26,7 @@
     "react-native": "^0.48.4",
     "react-native-button": "^2.1.0",
     "react-native-maps": "^0.17.1",
+    "react-native-modal": "^5.1.0",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "1.0.0-beta.13",
     "request": "^2.83.0"

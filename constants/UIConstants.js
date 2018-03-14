@@ -18,16 +18,17 @@ class UIConstants {
 
   static get fontSizes() {
     return {
-      largeTitle: 25,
-      title: 17,
-      normal: 14,
-      meta: 12,
+      largeTitle: 28,
+      title: 20,
+      normal: 17,
+      meta: 15,
     }
   }
 
   static get fontWeights() {
     return {
       bold: '700',
+      title: '600',
       normal: '400',
       thin: '300',
     }

@@ -19,7 +19,6 @@ import UIConstants from '../../constants/UIConstants';
 import LocalStorage from '../../helpers/LocalStorage';
 
 const PROFILE = 'Profile';
-const REGION = 'Region';
 const PASSWORD = 'Password';
 const HELP = 'Help';
 const LOGOUT = 'Log Out';
@@ -40,7 +39,6 @@ class SettingsScreen extends React.Component {
       user: this.props.user,
       personal_items: [
         {title: PROFILE, icon: 'person'},
-        {title: REGION, icon: 'pin-drop'},
         {title: PASSWORD, icon: 'lock'},
       ],
       more_items: [
@@ -70,12 +68,6 @@ class SettingsScreen extends React.Component {
     switch(item.title) {
       case PROFILE:
         this.props.navigation.navigate('EditProfile', {
-          user: this.state.user,
-          onUserUpdate: this._updateUser,
-        });
-        break;
-      case REGION:
-        this.props.navigation.navigate('EditRegion', {
           user: this.state.user,
           onUserUpdate: this._updateUser,
         });

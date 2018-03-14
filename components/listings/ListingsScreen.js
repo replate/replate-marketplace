@@ -11,6 +11,10 @@ import LoadingView from '../common/LoadingView';
 
 import ListingItem from './ListingItem';
 
+import ListingsTitle from './ListingsTitle';
+
+import RegionModal from './RegionModal';
+
 import ListingsRequester from '../../requesters/ListingsRequester';
 
 import Events from '../../constants/Events';
@@ -24,7 +28,7 @@ class ListingsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: params.title || '',
+      headerTitle: <ListingsTitle title={params.title || ''} onPressItem={params.onPressItem}/>,
     };
   }
 
@@ -36,13 +40,15 @@ class ListingsScreen extends React.Component {
       listings: [],
       isLoading: true,
       isRefreshing: false,
+      isModalVisible: false,
     }
   }
 
   componentDidMount() {
     LocalStorage.getUser().then((user) => {
       this.setState({ region: user.marketplace_region }, () => {
-        this.props.navigation.setParams({ title: this.state.region.region + " Marketplace" });
+        this.props.navigation.setParams({ title: `${this.state.region.region} Marketplace`,
+                                          onPressItem: this._toggleModal});
         this._getListings();
       });
     }).catch((error) => {
@@ -55,6 +61,17 @@ class ListingsScreen extends React.Component {
   componentWillDismount() {
     window.EventBus.off(Events.claimCancelled, this._addListing);
     window.EventBus.off(Events.regionUpdated, this._updateRegion);
+  }
+
+  _toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  }
+
+  _selectRegion = (region) => {
+    this.setState({ region: region }, () => {
+      this.props.navigation.setParams({ title: `${region.region} Marketplace`});
+      this._getListings();
+    });
   }
 
   _sortListings = (lat, lng) => {
@@ -168,6 +185,11 @@ class ListingsScreen extends React.Component {
             refreshing={this.state.isRefreshing}
             onRefresh={this._refresh}
           />
+        <RegionModal 
+          isModalVisible={this.state.isModalVisible}
+          toggleModal={this._toggleModal}
+          region={this.state.region}
+          onSelectRegion={this._selectRegion}/>
       </LoadingView>
     );
   }
