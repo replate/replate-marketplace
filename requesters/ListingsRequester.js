@@ -37,6 +37,10 @@ class ListingsRequester extends BaseRequester {
   static cancelClaim(listing) {
     return BaseRequester.post(APIConstants.listings.cancel(listing.id));
   }
+
+  static setNpo(listing, npo) {
+    return BaseRequester.post(APIConstants.listings.setNpo(listing.id), {npo_id: npo.id});
+  }
 }
 
 export default ListingsRequester;

@@ -83,6 +83,7 @@ class ListingsScreen extends React.Component {
       sortedListings.sort((listing1, listing2) => {
         return listing1.distance - listing2.distance;
       });
+
       this.setState({
           listings: sortedListings,
           isRefreshing: false,
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: UIConstants.fontSizes.normal,
     fontWeight: UIConstants.fontWeights.normal,
-    width: '100%', 
+    width: '100%',
     textAlign: 'center',
     marginBottom: UIConstants.margins.standard,
   },
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: UIConstants.fontSizes.meta,
     fontWeight: UIConstants.fontWeights.thin,
-    width: '100%', 
+    width: '100%',
     textAlign: 'center',
   },
 

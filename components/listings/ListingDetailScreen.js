@@ -28,6 +28,7 @@ import Events from '../../constants/Events';
 import ModelConstants from '../../constants/ModelConstants';
 import LocalStorage from '../../helpers/LocalStorage';
 import DateUtils from '../../helpers/DateUtils';
+import NpoModal from './NpoModal';
 
 class ListingDetailScreen extends React.Component {
 
@@ -44,14 +45,44 @@ class ListingDetailScreen extends React.Component {
       elevation: 0,
       zIndex: 10,
     },
-  });
+  })
 
   constructor(props) {
     super(props);
     this.state = {
+      npo: null,
       scrollOffset: 0,
       isClaiming: false,
+      isLoading: true,
+      isRefreshing: false,
+      isModalVisible: false,
     };
+  }
+
+  _toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  }
+
+  _selectNpo = (npo) => {
+    this.setState({ npo: npo });
+  }
+
+  _success = () => {
+    window.showBanner(
+        'success',
+        'Claimed! Please launch the Onfleet driver app to complete your pickup.'
+      );
+    this.props.navigation.goBack();
+  }
+
+  _saveNpo = () => {
+    if (this.state.npo.id) {
+    ListingsRequester.setNpo(this.props.listing, this.state.npo).then((listing) => {
+        this._success();
+      })
+    } else {
+      this._success();
+    }
   }
 
   _claim = () => {
@@ -61,11 +92,7 @@ class ListingDetailScreen extends React.Component {
       window.EventBus.trigger(Events.listingClaimed, listing);
       this.props.onClaim(listing);
       LocalStorage.userHasClaimed().then(() => {
-        window.showBanner(
-          'success', 
-          'Claimed! Please launch the Onfleet driver app to complete your pickup.'
-        );
-        this.props.navigation.goBack();
+        this._toggleModal();
       }).catch((error) => {
         Alert.alert(
           'Launch Onfleet',
@@ -203,6 +230,12 @@ class ListingDetailScreen extends React.Component {
         <View style={styles.actionsContainer}>
           {button}
         </View>
+        <NpoModal
+          isModalVisible={this.state.isModalVisible}
+          toggleModal={this._toggleModal}
+          npo={this.state.npo}
+          onSelectNpo={this._selectNpo}
+          onSaveNpo={this._saveNpo}/>
       </View>
     );
   }

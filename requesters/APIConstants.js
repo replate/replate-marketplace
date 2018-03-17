@@ -23,12 +23,19 @@ class APIConstants {
       listing: (listing_id) => this.BASE_URL + `/marketplace_listings/${listing_id}`,
       claim: (listing_id) => this.BASE_URL + `/marketplace_listings/${listing_id}/claim`,
       cancel: (listing_id) => this.BASE_URL + `/marketplace_listings/${listing_id}/cancel`,
+      setNpo: (listing_id) => this.BASE_URL + `/marketplace_listings/${listing_id}/set_npo`,
     }
   }
 
   static get regions() {
     return {
       all: this.BASE_URL + '/marketplace_regions',
+    }
+  }
+
+  static get npos() {
+    return {
+      all: this.BASE_URL + '/npos',
     }
   }
 
