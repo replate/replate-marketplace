@@ -184,7 +184,6 @@ class ListingDetailScreen extends React.Component {
           />
         </View>
         <ScrollView
-          style={styles.scroll}
           contentContainerStyle={styles.scrollContentContainer}
           onScroll={this._onScroll}
           scrollEventThrottle={15}
@@ -255,10 +254,6 @@ const styles = StyleSheet.create({
     marginTop: -Header.HEIGHT,
     flex: 1,
     backgroundColor: Colors.white,
-  },
-
-  scroll: {
-    flex: 1,
   },
 
   scrollContentContainer: {
