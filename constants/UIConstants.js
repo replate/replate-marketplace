@@ -47,6 +47,7 @@ class UIConstants {
       tabbar: 28,
       drawer: 24,
       label: 22,
+      check: 17,
     }
   }
 
