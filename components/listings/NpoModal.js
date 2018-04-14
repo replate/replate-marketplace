@@ -5,6 +5,7 @@ import {
   Text,
   View,
   FlatList,
+  TouchableOpacity,
   TextInput,
 } from 'react-native';
 
@@ -110,19 +111,6 @@ class NpoModal extends React.Component {
     )
   }
 
-  _saveNpoButton = () => {
-    return (
-      <View style={styles.button}>
-        <Button
-          onPress={this.props.onSaveNpo}
-          style={ styles.clearButtonSmall }
-          textStyle={ styles.buttonText }>
-          Done
-        </Button>
-      </View>
-    )
-  }
-
   onSearchChange(value) {
     this.setState({ searchInput: value });
   }
@@ -141,14 +129,19 @@ class NpoModal extends React.Component {
       <View style={{ flex: 1 }}>
         <Modal
           isVisible={this.props.isModalVisible}
-          backdropColor='black'
           onBackdropPress={this._toggleModal}
           onSwipe={this._toggleModal}
-          swipeDirection='left'>
+          swipeDirection='left'
+          style={styles.modal}>
           <LoadingView
             style={styles.container}
             isLoading={this.state.isLoading}>
-            <Text style={[styles.text]}>Destination</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={[styles.text, {'flex': 2}]}>Destination</Text>
+              <TouchableOpacity onPress={this._onSaveNpo}>
+                <Text style={[styles.button_text, {'flex': 1}]}>Done</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.itemContainer}>
               { this._searchIcon() }
               <TextInput
@@ -185,7 +178,6 @@ class NpoModal extends React.Component {
               onRefresh={this._refresh}
               ItemSeparatorComponent={() => <Border />}
               />
-            { this._saveNpoButton() }
           </LoadingView>
         </Modal>
       </View>
