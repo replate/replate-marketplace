@@ -10,6 +10,15 @@ export default StyleSheet.create({
     fontSize: UIConstants.fontSizes.title,
   },
 
+  modalText: {
+    margin: 15,
+    marginBottom: 10,
+    textAlign: 'center',
+    alignSelf: 'flex-end',
+    fontWeight: UIConstants.fontWeights.bold,
+    fontSize: UIConstants.fontSizes.title,
+  },
+
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -25,9 +34,14 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  modal : {
+    margin: 0,
+    backgroundColor: Colors.white,
+  },
+
   checkIcon: {
     marginLeft: UIConstants.margins.standard,
-    height: 17,
+    height: UIConstants.iconSizes.check,
   },
 
   input: {
@@ -49,13 +63,30 @@ export default StyleSheet.create({
   },
 
   buttonText: {
-    color: Colors.green,
-    fontSize: 17,
-    fontWeight: '500',
+    margin: 10,
+    marginTop: 20,
+    textAlign: 'center',
+    alignSelf: 'flex-end',
+    fontSize: UIConstants.fontSizes.normal,
+    color: Colors.blue,
   },
 
   button: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
+
+  normalModalItem: {
+    fontSize: UIConstants.fontSizes.normal,
+    fontWeight: UIConstants.fontWeights.nomal,
+    height: UIConstants.iconSizes.check,
+    flex: 1,
+  },
+
+  selectedModalItem: {
+    fontSize: UIConstants.fontSizes.normal,
+    fontWeight: UIConstants.fontWeights.bold,
+    height: UIConstants.iconSizes.check,
+    flex: 1,
+  }
 });

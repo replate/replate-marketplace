@@ -21,7 +21,6 @@ import LoadingButton from '../common/LoadingButton';
 
 import styles from './styles';
 import Colors from '../../constants/Colors';
-import UIConstants from '../../constants/UIConstants';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const iconSize = 17;
@@ -75,8 +74,8 @@ class NpoModal extends React.Component {
   }
 
   _onSaveNpo = () => {
-    this.props._toggleModal();
-    this.props.onSaveNpo(this.state.npo);
+    this.props.toggleModal();
+    this.props.onSaveNpo(this.state.selected_npo);
   }
 
   _refresh = () => {
@@ -134,12 +133,12 @@ class NpoModal extends React.Component {
           swipeDirection='left'
           style={styles.modal}>
           <LoadingView
-            style={styles.container}
+            style={{ flex: 1 }}
             isLoading={this.state.isLoading}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={[styles.text, {'flex': 2}]}>Destination</Text>
+              <Text style={[styles.modalText, {'flex': 2}]}>Destination</Text>
               <TouchableOpacity onPress={this._onSaveNpo}>
-                <Text style={[styles.button_text, {'flex': 1}]}>Done</Text>
+                <Text style={[styles.buttonText, {'flex': 1}]}>Done</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.itemContainer}>
@@ -161,8 +160,8 @@ class NpoModal extends React.Component {
                   <View style={styles.itemContainer} >
                     <Text style={
                       item.id === this.state.selected_npo.id
-                      ? styles.selectedRegion
-                      : styles.normalRegion
+                      ? styles.selectedModalItem
+                      : styles.normalModalItem
                     }>
                       {item.org_name}
                     </Text>
@@ -183,7 +182,6 @@ class NpoModal extends React.Component {
       </View>
     );
   }
-
 }
 
 export default NpoModal;
