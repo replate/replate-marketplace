@@ -5,6 +5,7 @@ import {
   Text,
   View,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
 import Modal from "react-native-modal";
@@ -40,6 +41,9 @@ class RegionModal extends React.Component {
       isRefreshing: false,
       isUpdating: false,
     }
+    this.state.initialState = {
+      selected_region: this.props.region,
+    }
   }
 
   componentDidMount() {
@@ -50,8 +54,16 @@ class RegionModal extends React.Component {
     this.props.toggleModal();
   }
 
-  _selectRegion = (region) => {
-    this.props.onSelectRegion(region);
+  _cancelAction = () => {
+    this.setState(this.state.initialState);
+    this._toggleModal();
+  }
+
+  _doneAction = () => {
+    this.props.onSelectRegion(this.state.selected_region)
+    this._selectRegion(this.state.selected_region);
+    this.setState({initialState : {selected_region: this.state.selected_region}})
+    this._toggleModal();
   }
 
   _getRegions = () => {
@@ -73,8 +85,6 @@ class RegionModal extends React.Component {
     this.setState({
       selected_region: region,
     });
-    this._toggleModal();
-    this._selectRegion(region);
   }
 
   _refresh = () => {
@@ -101,16 +111,24 @@ class RegionModal extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Modal 
+        <Modal
           isVisible={this.props.isModalVisible}
-          backdropColor='black'
           onBackdropPress={this._toggleModal}
           onSwipe={this._toggleModal}
-          swipeDirection='left'>
+          swipeDirection='left'
+          style={styles.modal}>
           <LoadingView
             style={styles.container}
             isLoading={this.state.isLoading}>
-            <Text style={[styles.text]}>Marketplaces</Text>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity onPress={this._cancelAction}>
+                <Text style={[styles.button_text, {'flex': 1}]}>Cancel</Text>
+              </TouchableOpacity>
+              <Text style={[styles.text, {'flex': 2}]}>Marketplaces</Text>
+              <TouchableOpacity onPress={this._doneAction}>
+                <Text style={[styles.button_text, {'flex': 1}]}>Done</Text>
+              </TouchableOpacity>
+            </View>
             <FlatList
               data={this.state.regions}
               keyExtractor={this._keyExtractor}
@@ -147,20 +165,30 @@ class RegionModal extends React.Component {
 const styles = StyleSheet.create({
 
   text: {
-    margin: 10,
+    margin: 15,
+    marginBottom: 10,
     textAlign: 'center',
+    alignSelf: 'flex-end',
     fontWeight: UIConstants.fontWeights.bold,
     fontSize: UIConstants.fontSizes.title,
   },
 
+  button_text: {
+    margin: 10,
+    marginTop: 20,
+    textAlign: 'center',
+    alignSelf: 'flex-end',
+    fontSize: UIConstants.fontSizes.normal,
+    color: Colors.blue,
+  },
+
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    borderRadius: 5,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 150,
-    marginBottom: 150,
+  },
+
+  modal : {
+    margin: 0,
+    backgroundColor: Colors.white,
   },
 
   itemContainer: {
@@ -186,6 +214,7 @@ const styles = StyleSheet.create({
     height: iconSize,
     flex: 1,
   }
+
 
 })
 
