@@ -30,7 +30,6 @@ class NpoModal extends React.Component {
   static propTypes = {
     isModalVisible: PropTypes.bool,
     toggleModal: PropTypes.func,
-    onSelectNpo: PropTypes.func,
     onSaveNpo: PropTypes.func,
   }
 
@@ -38,7 +37,7 @@ class NpoModal extends React.Component {
     super(props);
 
     this.state = {
-      selected_npo: this.props.npo,
+      selected_npo: null,
       npos: [],
       isLoading: true,
       isRefreshing: false,
@@ -55,7 +54,7 @@ class NpoModal extends React.Component {
     const other = [{ id: null, org_name: "Other" }];
     NpoRequester.getNpos().then((npos) =>  {
       this.setState({
-        selected_npo: this.state.selected_npo || npos[0],
+        selected_npo: npos[0],
         npos: npos.concat(other),
         isRefreshing: false,
         isLoading: false,
@@ -72,12 +71,11 @@ class NpoModal extends React.Component {
     this.setState({
       selected_npo: npo,
     });
-    this.props.onSelectNpo(npo);
   }
 
   _onSaveNpo = () => {
     this.props._toggleModal();
-    this.props.onSaveNpo();
+    this.props.onSaveNpo(this.state.npo);
   }
 
   _refresh = () => {

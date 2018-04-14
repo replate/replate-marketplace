@@ -50,7 +50,6 @@ class ListingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      npo: null,
       scrollOffset: 0,
       isClaiming: false,
       isLoading: true,
@@ -63,10 +62,6 @@ class ListingDetailScreen extends React.Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   }
 
-  _selectNpo = (npo) => {
-    this.setState({ npo: npo });
-  }
-
   _success = () => {
     window.showBanner(
         'success',
@@ -75,9 +70,9 @@ class ListingDetailScreen extends React.Component {
     this.props.navigation.goBack();
   }
 
-  _saveNpo = () => {
-    if (this.state.npo.id) {
-    ListingsRequester.setNpo(this.props.listing, this.state.npo).then((listing) => {
+  _saveNpo = (npo) => {
+    if (npo.id) {
+      ListingsRequester.setNpo(this.props.listing, npo).then((listing) => {
         this._success();
       })
     } else {
@@ -232,8 +227,6 @@ class ListingDetailScreen extends React.Component {
         <NpoModal
           isModalVisible={this.state.isModalVisible}
           toggleModal={this._toggleModal}
-          npo={this.state.npo}
-          onSelectNpo={this._selectNpo}
           onSaveNpo={this._saveNpo}/>
       </View>
     );
