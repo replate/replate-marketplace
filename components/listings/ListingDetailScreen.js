@@ -86,16 +86,7 @@ class ListingDetailScreen extends React.Component {
       listing.distance = this.props.listing.distance;
       window.EventBus.trigger(Events.listingClaimed, listing);
       this.props.onClaim(listing);
-      LocalStorage.userHasClaimed().then(() => {
-        this._toggleModal();
-      }).catch((error) => {
-        Alert.alert(
-          'Launch Onfleet',
-          'Congratulations on your claim! Please launch the Onfleet driver app to complete your pickup.',
-          [{text: 'Close', onPress: () => this.props.navigation.goBack()}]
-        )
-        LocalStorage.storeUserHasClaimed(true);
-      });
+      this._toggleModal();
     }).catch((error) => {
       window.showBanner('error', error.message);
       this.setState({isClaiming: false});
