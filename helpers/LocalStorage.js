@@ -23,6 +23,27 @@ class LocalStorage {
   static clearUser() {
     AsyncStorage.removeItem(StorageKeys.user);
   }
+
+  static storeUserHasClaimed(claimed_json) {
+    AsyncStorage.setItem(StorageKeys.userHasClaimed, JSON.stringify(claimed_json));
+  }
+
+  static async userHasClaimed() {
+    try {
+      var claimed_json = await AsyncStorage.getItem(StorageKeys.userHasClaimed);
+      if (claimed_json !== null) {
+        return Promise.resolve(true);
+      } else {
+        return Promise.reject(new Error("No stored claim value"));
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  static clearUserHasClaimed() {
+    AsyncStorage.removeItem(StorageKeys.userHasClaimed);
+  }
 }
 
 export default LocalStorage;
