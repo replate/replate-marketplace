@@ -70,24 +70,14 @@ class ListingDetailScreen extends React.Component {
     this.props.navigation.goBack();
   }
 
-  _saveNpo = (npo) => {
-    if (npo.id) {
-      ListingsRequester.setNpo(this.props.listing, npo).then((listing) => {
-        this._success();
-      })
-    } else {
-      this._success();
-    }
-  }
-
-  _claim = () => {
+  _saveListing = (npo) => {
     this.setState({isClaiming: true});
-    ListingsRequester.claimListing(this.props.listing).then((listing) => {
+    ListingsRequester.claimListing(this.props.listing, npo).then((listing) => {
       listing.distance = this.props.listing.distance;
       window.EventBus.trigger(Events.listingClaimed, listing);
       this.props.onClaim(listing);
       LocalStorage.userHasClaimed().then(() => {
-        this._toggleModal();
+        this._success();
       }).catch((error) => {
         Alert.alert(
           'Launch Onfleet',
@@ -100,6 +90,10 @@ class ListingDetailScreen extends React.Component {
       window.showBanner('error', error.message);
       this.setState({isClaiming: false});
     });
+  }
+
+  _claim = () => {
+    this._toggleModal();
   }
 
   _cancel = () => {
@@ -227,7 +221,7 @@ class ListingDetailScreen extends React.Component {
         <NpoModal
           isModalVisible={this.state.isModalVisible}
           toggleModal={this._toggleModal}
-          onSaveNpo={this._saveNpo}/>
+          onSaveNpo={this._saveListing}/>
       </View>
     );
   }
