@@ -44,6 +44,7 @@ class LocalStorage {
   static clearUserHasClaimed() {
     AsyncStorage.removeItem(StorageKeys.userHasClaimed);
   }
+
 }
 
 export default LocalStorage;
