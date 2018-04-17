@@ -78,6 +78,10 @@ class NpoModal extends React.Component {
     this.props.onSaveNpo(this.state.selected_npo);
   }
 
+  _cancelAction = () => {
+    this.props.toggleModal();
+  }
+
   _refresh = () => {
     this.setState({isRefreshing: true}, () => {
       this._getNpos();
@@ -136,6 +140,9 @@ class NpoModal extends React.Component {
             style={{ flex: 1 }}
             isLoading={this.state.isLoading}>
             <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity onPress={this._cancelAction}>
+                <Text style={[styles.buttonText, {'flex': 1}]}>Cancel</Text>
+              </TouchableOpacity>
               <Text style={[styles.modalText, {'flex': 2}]}>Destination</Text>
               <TouchableOpacity onPress={this._onSaveNpo}>
                 <Text style={[styles.buttonText, {'flex': 1}]}>Done</Text>

@@ -30,16 +30,12 @@ class ListingsRequester extends BaseRequester {
     return BaseRequester.get(APIConstants.listings.listing(listing.id));
   }
 
-  static claimListing(listing) {
-    return BaseRequester.post(APIConstants.listings.claim(listing.id));
+  static claimListing(listing, npo) {
+    return BaseRequester.post(APIConstants.listings.claim(listing.id), {npo_id: npo.id});
   }
 
   static cancelClaim(listing) {
     return BaseRequester.post(APIConstants.listings.cancel(listing.id));
-  }
-
-  static setNpo(listing, npo) {
-    return BaseRequester.post(APIConstants.listings.setNpo(listing.id), {npo_id: npo.id});
   }
 }
 
