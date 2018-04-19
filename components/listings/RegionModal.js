@@ -17,8 +17,8 @@ import LoadingView from '../common/LoadingView';
 import ListRow from '../common/ListRow';
 import LoadingButton from '../common/LoadingButton';
 
+import styles from './styles';
 import Colors from '../../constants/Colors';
-import UIConstants from '../../constants/UIConstants';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const iconSize = 17;
@@ -61,7 +61,6 @@ class RegionModal extends React.Component {
 
   _doneAction = () => {
     this.props.onSelectRegion(this.state.selected_region)
-    this._selectRegion(this.state.selected_region);
     this.setState({initialState : {selected_region: this.state.selected_region}})
     this._toggleModal();
   }
@@ -118,15 +117,15 @@ class RegionModal extends React.Component {
           swipeDirection='left'
           style={styles.modal}>
           <LoadingView
-            style={styles.container}
+            style={{ flex: 1 }}
             isLoading={this.state.isLoading}>
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity onPress={this._cancelAction}>
-                <Text style={[styles.button_text, {'flex': 1}]}>Cancel</Text>
+                <Text style={[styles.buttonText, {'flex': 1}]}>Cancel</Text>
               </TouchableOpacity>
-              <Text style={[styles.text, {'flex': 2}]}>Marketplaces</Text>
+              <Text style={[styles.modalText, {'flex': 2}]}>Marketplaces</Text>
               <TouchableOpacity onPress={this._doneAction}>
-                <Text style={[styles.button_text, {'flex': 1}]}>Done</Text>
+                <Text style={[styles.buttonText, {'flex': 1}]}>Done</Text>
               </TouchableOpacity>
             </View>
             <FlatList
@@ -137,8 +136,8 @@ class RegionModal extends React.Component {
                   <View style={styles.itemContainer} >
                     <Text style={
                       item.id === this.state.selected_region.id
-                      ? styles.selectedRegion
-                      : styles.normalRegion
+                      ? styles.selectedModalItem
+                      : styles.normalModalItem
                     }>
                       {item.region}
                     </Text>
@@ -159,63 +158,6 @@ class RegionModal extends React.Component {
       </View>
     );
   }
-
 }
-
-const styles = StyleSheet.create({
-
-  text: {
-    margin: 15,
-    marginBottom: 10,
-    textAlign: 'center',
-    alignSelf: 'flex-end',
-    fontWeight: UIConstants.fontWeights.bold,
-    fontSize: UIConstants.fontSizes.title,
-  },
-
-  button_text: {
-    margin: 10,
-    marginTop: 20,
-    textAlign: 'center',
-    alignSelf: 'flex-end',
-    fontSize: UIConstants.fontSizes.normal,
-    color: Colors.blue,
-  },
-
-  container: {
-    flex: 1,
-  },
-
-  modal : {
-    margin: 0,
-    backgroundColor: Colors.white,
-  },
-
-  itemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  checkIcon: {
-    marginLeft: UIConstants.margins.standard,
-    height: iconSize,
-  },
-
-  normalRegion: {
-    fontSize: UIConstants.fontSizes.normal,
-    fontWeight: UIConstants.fontWeights.nomal,
-    height: iconSize,
-    flex: 1,
-  },
-
-  selectedRegion: {
-    fontSize: UIConstants.fontSizes.normal,
-    fontWeight: UIConstants.fontWeights.bold,
-    height: iconSize,
-    flex: 1,
-  }
-
-
-})
 
 export default RegionModal;

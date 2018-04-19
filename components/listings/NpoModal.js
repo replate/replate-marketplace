@@ -5,6 +5,7 @@ import {
   Text,
   View,
   FlatList,
+  TouchableOpacity,
   TextInput,
 } from 'react-native';
 
@@ -20,7 +21,6 @@ import LoadingButton from '../common/LoadingButton';
 
 import styles from './styles';
 import Colors from '../../constants/Colors';
-import UIConstants from '../../constants/UIConstants';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const iconSize = 17;
@@ -74,8 +74,12 @@ class NpoModal extends React.Component {
   }
 
   _onSaveNpo = () => {
-    this.props._toggleModal();
-    this.props.onSaveNpo(this.state.npo);
+    this.props.toggleModal();
+    this.props.onSaveNpo(this.state.selected_npo);
+  }
+
+  _cancelAction = () => {
+    this.props.toggleModal();
   }
 
   _refresh = () => {
@@ -110,19 +114,6 @@ class NpoModal extends React.Component {
     )
   }
 
-  _saveNpoButton = () => {
-    return (
-      <View style={styles.button}>
-        <Button
-          onPress={this.props.onSaveNpo}
-          style={ styles.clearButtonSmall }
-          textStyle={ styles.buttonText }>
-          Done
-        </Button>
-      </View>
-    )
-  }
-
   onSearchChange(value) {
     this.setState({ searchInput: value });
   }
@@ -141,14 +132,22 @@ class NpoModal extends React.Component {
       <View style={{ flex: 1 }}>
         <Modal
           isVisible={this.props.isModalVisible}
-          backdropColor='black'
           onBackdropPress={this._toggleModal}
           onSwipe={this._toggleModal}
-          swipeDirection='left'>
+          swipeDirection='left'
+          style={styles.modal}>
           <LoadingView
-            style={styles.container}
+            style={{ flex: 1 }}
             isLoading={this.state.isLoading}>
-            <Text style={[styles.text]}>Destination</Text>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity onPress={this._cancelAction}>
+                <Text style={[styles.buttonText, {'flex': 1}]}>Cancel</Text>
+              </TouchableOpacity>
+              <Text style={[styles.modalText, {'flex': 2}]}>Destination</Text>
+              <TouchableOpacity onPress={this._onSaveNpo}>
+                <Text style={[styles.buttonText, {'flex': 1}]}>Done</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.itemContainer}>
               { this._searchIcon() }
               <TextInput
@@ -168,8 +167,8 @@ class NpoModal extends React.Component {
                   <View style={styles.itemContainer} >
                     <Text style={
                       item.id === this.state.selected_npo.id
-                      ? styles.selectedRegion
-                      : styles.normalRegion
+                      ? styles.selectedModalItem
+                      : styles.normalModalItem
                     }>
                       {item.org_name}
                     </Text>
@@ -185,13 +184,11 @@ class NpoModal extends React.Component {
               onRefresh={this._refresh}
               ItemSeparatorComponent={() => <Border />}
               />
-            { this._saveNpoButton() }
           </LoadingView>
         </Modal>
       </View>
     );
   }
-
 }
 
 export default NpoModal;
