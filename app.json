@@ -2,7 +2,7 @@
 	"expo": {
   	"name": "Replate",
   	"icon": "./assets/app-icon.png",
-  	"version": "1.0.0",
+  	"version": "1.0.2",
   	"slug": "replate",
     "orientation": "portrait",
   	"sdkVersion": "21.0.0",
