@@ -1,6 +1,6 @@
 # Re-plate Marketplace
 
-<img src="http://i.imgur.com/6CMNP9Z.png" height="120" alt="Replate logo" /><br />
+<img src="./assets/logo-full.svg" height="120" alt="Replate logo" /><br />
 [Re-plate](http://re-plate.org) is a nonprofit organization that uses technology to eliminate food waste and hunger in the community. It enables people and businesses to donate surplus food to other nonprofits or people in need.
 
 About Blueprint
